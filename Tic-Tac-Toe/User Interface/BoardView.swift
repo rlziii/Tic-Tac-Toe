@@ -1,5 +1,81 @@
 import SwiftUI
 
+class GameEnvironment: ObservableObject {
+    @Published var currentPlayer: PlayerType = .x
+
+    @Published var showWinnerAlert: Bool = false
+    @Published var winningPlayer: PlayerType?
+
+    var boardArray: [[BoardSpaceSelection?]] = [
+        [nil,nil,nil],
+        [nil,nil,nil],
+        [nil,nil,nil]
+    ]
+
+    func updateBoardPosition(row: Int, column: Int, selection: BoardSpaceSelection) {
+        assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
+
+        boardArray[row][column] = selection
+
+        checkForWinner()
+    }
+
+    func checkBoardPositionAt(row: Int, column: Int) -> BoardSpaceSelection? {
+        guard validateIndexAt(row: row, column: column) else {
+            assertionFailure("Attempting to check board with index out of bounds...")
+            return nil
+        }
+
+        return boardArray[row][column]
+    }
+
+    private func validateIndexAt(row: Int, column: Int) -> Bool {
+        row >= 0 && row < boardArray.count && column >= 0 && column < boardArray[row].count
+    }
+
+    func prettyPrintGameBoard() {
+        for row in 0...2 {
+            for column in 0...2 {
+                let selection = boardArray[row][column]
+                let terminator = (column == 2) ? "\n" : ""
+                print(selection?.token ?? " ", terminator: terminator)
+            }
+        }
+    }
+
+    private func checkForWinner() {
+        let winningPaths = [
+            [(0,0),(0,1),(0,2)],
+            [(1,0),(1,1),(1,2)],
+            [(2,0),(2,1),(2,2)],
+            [(0,0),(1,0),(2,0)],
+            [(0,1),(1,1),(2,1)],
+            [(0,2),(1,2),(2,2)],
+            [(0,0),(1,1),(2,2)],
+            [(0,2),(1,1),(2,0)],
+        ]
+
+        for path in winningPaths {
+            let set = Set(path.map { boardArray[$0][$1] })
+
+            if set.count == 1, let selection = set.first, let selectionUnwrapped = selection {
+                winningPlayer = {
+                    switch selectionUnwrapped {
+                    case .x:
+                        return .x
+                    case .o:
+                        return .o
+                    }
+                }()
+
+                showWinnerAlert = true
+
+                break
+            }
+        }
+    }
+}
+
 enum PlayerType {
     case x
     case o
@@ -15,12 +91,16 @@ enum PlayerType {
 }
 
 struct BoardView: View {
-    @State private var currentPlayer: PlayerType = .x
+    @ObservedObject private var gameEnvironment = GameEnvironment()
 
     var body: some View {
         VStack {
-            Text("Current Player: \(currentPlayer.token)")
-            BoardGridView(rows: 3, columns: 3, size: 100, currentPlayer: $currentPlayer)
+            Text("Current Player: \(gameEnvironment.currentPlayer.token)")
+            BoardGridView(rows: 3, columns: 3, size: 100)
+                .environmentObject(gameEnvironment)
+        }.alert(isPresented: $gameEnvironment.showWinnerAlert) {
+            Alert(title: Text("Game over!"), message: Text("Player \(gameEnvironment.winningPlayer?.token ?? "-") won the game!"), dismissButton: .default(Text("Done")))
+
         }
     }
 }
@@ -29,8 +109,6 @@ struct BoardGridView: View {
     let rows: Int
     let columns: Int
     let size: CGFloat
-
-    @Binding var currentPlayer: PlayerType
 
     private var rowsRange: ClosedRange<Int> {
         0...(rows - 1)
@@ -42,10 +120,10 @@ struct BoardGridView: View {
 
     var body: some View {
         HStack {
-            ForEach(rowsRange, id: \.self) { a in
+            ForEach(columnsRange, id: \.self) { column in
                 VStack {
-                    ForEach(columnsRange, id: \.self) { _ in
-                        BoardSpaceView(size: size, currentPlayer: $currentPlayer)
+                    ForEach(rowsRange, id: \.self) { row in
+                        BoardSpaceView(size: size, row: row, column: column)
                             .frame(width: size, height: size)
                     }
                 }
@@ -56,54 +134,57 @@ struct BoardGridView: View {
 
 struct BoardSpaceView: View {
     let size: CGFloat
-
-    @Binding var currentPlayer: PlayerType
-
-    @State private var selection: BoardSpaceSelection = .none
+    let row: Int
+    let column: Int
 
     var body: some View {
         ZStack {
             Rectangle()
                 .size(width: size, height: size)
 
-            BoardSpaceButtonView(size: size, selection: $selection, currentPlayer: $currentPlayer)
+            BoardSpaceButtonView(size: size, row: row, column: column)
         }
     }
 }
 
 struct BoardSpaceButtonView: View {
     let size: CGFloat
+    let row: Int
+    let column: Int
 
-    @Binding var selection: BoardSpaceSelection
-    @Binding var currentPlayer: PlayerType
+    @EnvironmentObject var gameEnvironment: GameEnvironment
+
+    private var selection: BoardSpaceSelection? {
+        gameEnvironment.checkBoardPositionAt(row: row, column: column)
+    }
 
     var body: some View {
-        Button(action: {
-            switch selection {
-            case .x, .o:
-                break // Do nothing
-            case .none:
-                switch currentPlayer {
-                case .x:
-                    selection = .x
-                    currentPlayer = .o
-                case .o:
-                    selection = .o
-                    currentPlayer = .x
-                }
-            }
-        }, label: {
-            Text(selection.token)
+        switch selection {
+        case .x, .o:
+            Text(selection?.token ?? "")
                 .font(.largeTitle)
                 .frame(width: size, height: size)
-        })
+        case .none:
+            Button(action: {
+                switch gameEnvironment.currentPlayer {
+                case .x:
+                    gameEnvironment.updateBoardPosition(row: row, column: column, selection: .x)
+                    gameEnvironment.currentPlayer = .o
+                case .o:
+                    gameEnvironment.updateBoardPosition(row: row, column: column, selection: .o)
+                    gameEnvironment.currentPlayer = .x
+                }
+            }, label: {
+                Text("")
+                    .frame(width: size, height: size)
+            })
+        }
     }
 }
 
 enum BoardSpaceSelection {
     case x
     case o
-    case none
 
     var token: String {
         switch self {
@@ -111,8 +192,6 @@ enum BoardSpaceSelection {
             return PlayerType.x.token
         case .o:
             return PlayerType.o.token
-        case .none:
-            return ""
         }
     }
 }
