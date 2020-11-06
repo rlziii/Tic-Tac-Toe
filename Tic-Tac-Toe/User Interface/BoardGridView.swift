@@ -33,3 +33,11 @@ struct BoardGridView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct BoardGridView_Previews: PreviewProvider {
+    static var previews: some View {
+        BoardGridView(rows: 3, columns: 3, size: 100)
+    }
+}

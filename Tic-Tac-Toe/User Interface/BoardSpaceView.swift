@@ -39,3 +39,11 @@ struct BoardSpaceView: View {
         }
     }
 }
+
+// MARK: - Previews
+
+struct BoardSpaceView_Previews: PreviewProvider {
+    static var previews: some View {
+        BoardSpaceView(size: 100, row: 0, column: 0)
+    }
+}
