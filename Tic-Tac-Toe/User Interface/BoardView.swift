@@ -4,7 +4,7 @@ struct BoardView: View {
 
     // MARK: - Private Properties
 
-    @StateObject private var gameEnvironment = GameEnvironment()
+    @EnvironmentObject private var gameEnvironment: GameEnvironment
 
     // MARK: - Body
 
@@ -27,5 +27,6 @@ struct BoardView: View {
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
         BoardView()
+            .environmentObject(GameEnvironment())
     }
 }
