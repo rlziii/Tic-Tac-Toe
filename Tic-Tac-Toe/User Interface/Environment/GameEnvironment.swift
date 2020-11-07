@@ -38,9 +38,31 @@ class GameEnvironment: ObservableObject {
         checkForTie()
 
         currentPlayer = currentPlayer.next
+
+        if currentPlayer == .o {
+            makeEasyAIMove()
+        }
     }
 
     // MARK: - Private Methods
+
+    private func makeEasyAIMove() {
+        var emptySpaces = [(Int, Int)]()
+
+        for row in 0...2 {
+            for column in 0...2 {
+                if boardArray[row][column] == nil {
+                    emptySpaces.append((row, column))
+                }
+            }
+        }
+
+        guard let (randomRow, randomColumn) = emptySpaces.randomElement() else {
+            return
+        }
+
+        updateBoardPosition(row: randomRow, column: randomColumn)
+    }
 
     private func checkForWinner() {
         guard alertType == nil else {
