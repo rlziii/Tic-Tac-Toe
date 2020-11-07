@@ -33,7 +33,7 @@ class GameEnvironment: ObservableObject {
     // MARK: - Private Methods
 
     private func updateBoardTokenFor(index: Int) {
-        gameBoard[index] = currentPlayer
+        gameBoard = gameBoard.makeMove(at: index)
 
         endOfTurn()
     }
@@ -45,7 +45,8 @@ class GameEnvironment: ObservableObject {
         currentPlayer = currentPlayer.next
 
         if currentPlayer == .o {
-            makeEasyAIMove()
+//            makeEasyAIMove()
+            makeHardAIMove()
         }
     }
 
@@ -84,9 +85,52 @@ class GameEnvironment: ObservableObject {
     }
 
     private func makeHardAIMove() {
-//        func minimax(gameBoard: GameBoard, maximizing: Bool, originalPlayer: PlayerToken) -> Int {
-//            if board
-//        }
+        guard endOfGameType == nil else {
+            return
+        }
+
+        func minimax(gameBoard: GameBoard, maximizing: Bool, originalPlayer: PlayerToken) -> Int {
+            if gameBoard.hasWinner() && originalPlayer == gameBoard.currentPlayer.next {
+                return 1
+            } else if gameBoard.hasWinner() && originalPlayer != gameBoard.currentPlayer.next {
+                return -1
+            } else if gameBoard.isTie() {
+                return 0
+            }
+
+            if maximizing {
+                var bestEvaluation = Int.min
+
+                for index in gameBoard.emptyIndexes() {
+                    let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: false, originalPlayer: originalPlayer)
+                    bestEvaluation = max(result, bestEvaluation)
+                }
+
+                return bestEvaluation
+            } else {
+                var worstEvaluation = Int.max
+
+                for index in gameBoard.emptyIndexes() {
+                    let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: true, originalPlayer: originalPlayer)
+                    worstEvaluation = min(result, worstEvaluation)
+                }
+
+                return worstEvaluation
+            }
+        }
+
+        var bestEvaluation = Int.min
+        var bestMove = -1
+
+        for index in gameBoard.emptyIndexes() {
+            let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: false, originalPlayer: gameBoard.currentPlayer)
+            if result > bestEvaluation {
+                bestEvaluation = result
+                bestMove = index
+            }
+        }
+
+        updateBoardTokenFor(index: bestMove)
     }
 
     // MARK: - Debug Methods
