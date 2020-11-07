@@ -9,7 +9,7 @@ class GameEnvironment: ObservableObject {
 
     // MARK: - Private Properties
 
-    private var boardArray: [[PlayerToken?]] = createNewBoard()
+    private var boardArray: [PlayerToken?] = createNewBoard()
 
     // MARK: - Public Methods
 
@@ -26,13 +26,13 @@ class GameEnvironment: ObservableObject {
             return nil
         }
 
-        return boardArray[row][column]
+        return getBoardPositionAt(row: row, column: column)
     }
 
     func updateBoardPosition(row: Int, column: Int) {
         assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
 
-        boardArray[row][column] = currentPlayer
+        setBoardPositionAt(row: row, column: column, newValue: currentPlayer)
 
         checkForWinner()
         checkForTie()
@@ -46,12 +46,28 @@ class GameEnvironment: ObservableObject {
 
     // MARK: - Private Methods
 
+    private func getBoardPositionAt(row: Int, column: Int) -> PlayerToken? {
+        assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
+
+        let rowLength = 3
+        let index = (row * rowLength) + column
+        return boardArray[index]
+    }
+
+    private func setBoardPositionAt(row: Int, column: Int, newValue: PlayerToken?) {
+        assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
+
+        let rowLength = 3
+        let index = (row * rowLength) + column
+        boardArray[index] = newValue
+    }
+
     private func makeEasyAIMove() {
         var emptySpaces = [(Int, Int)]()
 
         for row in 0...2 {
             for column in 0...2 {
-                if boardArray[row][column] == nil {
+                if getBoardPositionAt(row: row, column: column) == nil {
                     emptySpaces.append((row, column))
                 }
             }
@@ -69,19 +85,25 @@ class GameEnvironment: ObservableObject {
             return
         }
 
+        /*
+         0 1 2
+         3 4 5
+         6 7 8
+         */
+
         let winningPaths = [
-            [(0,0),(0,1),(0,2)], // Top row.
-            [(1,0),(1,1),(1,2)], // Middle row.
-            [(2,0),(2,1),(2,2)], // Bottom row.
-            [(0,0),(1,0),(2,0)], // Left column.
-            [(0,1),(1,1),(2,1)], // Center column.
-            [(0,2),(1,2),(2,2)], // Right column.
-            [(0,0),(1,1),(2,2)], // Top-left-to-bottom-right diagonal (\).
-            [(0,2),(1,1),(2,0)], // Top-right-to-bottom-left diagonal (/).
+            [0, 1, 2], // Top row.
+            [3, 4, 5], // Middle row.
+            [6, 7, 8], // Bottom row.
+            [0, 3, 6], // Left column.
+            [1, 4, 7], // Center column.
+            [2, 5, 8], // Right column.
+            [0, 4, 8], // Top-left-to-bottom-right diagonal (\).
+            [2, 4, 6], // Top-right-to-bottom-left diagonal (/).
         ]
 
         for path in winningPaths {
-            let set = Set(path.map { boardArray[$0][$1] })
+            let set = Set(path.map { boardArray[$0] })
 
             if set.count == 1, let selection = set.first, let selectionUnwrapped = selection {
                 alertType = .winning(selectionUnwrapped)
@@ -95,38 +117,28 @@ class GameEnvironment: ObservableObject {
             return
         }
 
-        let boardValues = boardArray.flatMap { row in
-            row.map { $0 }
-        }
-
-        let hasEmptySpace = boardValues.contains(nil)
-
-        if !hasEmptySpace {
+        if !boardArray.contains(nil) {
             alertType = .tie
         }
     }
 
     private func validateIndexAt(row: Int, column: Int) -> Bool {
-        row >= 0 && row < boardArray.count && column >= 0 && column < boardArray[row].count
+        row >= 0 && row <= 2 && column >= 0 && column <= 2
     }
 
     // MARK: - Private Type Methods
 
-    private static func createNewBoard() -> [[PlayerToken?]] {
-        [[nil,nil,nil],
-         [nil,nil,nil],
-         [nil,nil,nil]]
+    private static func createNewBoard() -> [PlayerToken?] {
+        Array(repeating: nil, count: 9)
     }
 
     // MARK: - Debug Methods
 
     func prettyPrintGameBoard() {
-        for row in 0...2 {
-            for column in 0...2 {
-                let selection = boardArray[row][column]
-                let terminator = (column == 2) ? "\n" : ""
-                print(selection?.token ?? " ", terminator: terminator)
-            }
+        for index in 0...boardArray.count {
+            let selection = boardArray[index]
+            let terminator = (index + 1).isMultiple(of: 3) ? "\n" : ""
+            print(selection?.token ?? " ", terminator: terminator)
         }
     }
 }
