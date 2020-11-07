@@ -21,12 +21,15 @@ class GameEnvironment: ObservableObject {
     }
 
     func checkBoardPositionAt(row: Int, column: Int) -> PlayerToken? {
-        guard validateIndexAt(row: row, column: column) else {
-            assertionFailure("Attempting to check board with index out of bounds...")
-            return nil
-        }
+        getBoardPositionAt(row: row, column: column)
+    }
 
-        return getBoardPositionAt(row: row, column: column)
+    func updateBoardPosition(index: Int) {
+        assert(validateIndexAt(index: index), "Attempting to check board with index out of bounds...")
+
+        setBoardPositionAt(index: index, newValue: currentPlayer)
+
+        endOfTurnChecks()
     }
 
     func updateBoardPosition(row: Int, column: Int) {
@@ -34,6 +37,37 @@ class GameEnvironment: ObservableObject {
 
         setBoardPositionAt(row: row, column: column, newValue: currentPlayer)
 
+        endOfTurnChecks()
+    }
+
+    // MARK: - Private Methods
+
+    private func boardPositionIndexAt(row: Int, column: Int) -> Int {
+        let rowLength = 3
+        return (row * rowLength) + column
+    }
+
+    private func getBoardPositionAt(row: Int, column: Int) -> PlayerToken? {
+        assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
+
+        let index = boardPositionIndexAt(row: row, column: column)
+        return boardArray[index]
+    }
+
+    private func setBoardPositionAt(row: Int, column: Int, newValue: PlayerToken?) {
+        assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
+
+        let index = boardPositionIndexAt(row: row, column: column)
+        boardArray[index] = newValue
+    }
+
+    private func setBoardPositionAt(index: Int, newValue: PlayerToken?) {
+        assert(validateIndexAt(index: index), "Attempting to check board with index out of bounds...")
+
+        boardArray[index] = newValue
+    }
+
+    private func endOfTurnChecks() {
         checkForWinner()
         checkForTie()
 
@@ -44,40 +78,14 @@ class GameEnvironment: ObservableObject {
         }
     }
 
-    // MARK: - Private Methods
-
-    private func getBoardPositionAt(row: Int, column: Int) -> PlayerToken? {
-        assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
-
-        let rowLength = 3
-        let index = (row * rowLength) + column
-        return boardArray[index]
-    }
-
-    private func setBoardPositionAt(row: Int, column: Int, newValue: PlayerToken?) {
-        assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
-
-        let rowLength = 3
-        let index = (row * rowLength) + column
-        boardArray[index] = newValue
-    }
-
     private func makeEasyAIMove() {
-        var emptySpaces = [(Int, Int)]()
+        let emptyIndexes = boardArray.enumerated().compactMap { $1 == nil ? $0 : nil }
 
-        for row in 0...2 {
-            for column in 0...2 {
-                if getBoardPositionAt(row: row, column: column) == nil {
-                    emptySpaces.append((row, column))
-                }
-            }
-        }
-
-        guard let (randomRow, randomColumn) = emptySpaces.randomElement() else {
+        guard let randomIndex = emptyIndexes.randomElement() else {
             return
         }
 
-        updateBoardPosition(row: randomRow, column: randomColumn)
+        updateBoardPosition(index: randomIndex)
     }
 
     private func checkForWinner() {
@@ -126,6 +134,10 @@ class GameEnvironment: ObservableObject {
         row >= 0 && row <= 2 && column >= 0 && column <= 2
     }
 
+    private func validateIndexAt(index: Int) -> Bool {
+        index < boardArray.count
+    }
+
     // MARK: - Private Type Methods
 
     private static func createNewBoard() -> [PlayerToken?] {
@@ -135,7 +147,7 @@ class GameEnvironment: ObservableObject {
     // MARK: - Debug Methods
 
     func prettyPrintGameBoard() {
-        for index in 0...boardArray.count {
+        for index in 0...(boardArray.count - 1) {
             let selection = boardArray[index]
             let terminator = (index + 1).isMultiple(of: 3) ? "\n" : ""
             print(selection?.token ?? " ", terminator: terminator)
