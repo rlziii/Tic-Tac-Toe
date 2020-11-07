@@ -8,6 +8,8 @@ class GameEnvironment: ObservableObject {
     @Published var gameMode: GameMode = .onePlayer(.easyMode)
 
     @Published var gameBoard: GameBoard = GameBoard()
+    @Published var isMultiplayer = false
+    @Published var twoPlayerMode: TwoPlayerMode = .localMode
     @Published var difficulty: OnePlayerMode = .easyMode
     @Published var endOfGameType: EndOfGameType?
 
@@ -40,7 +42,7 @@ class GameEnvironment: ObservableObject {
         checkForWinner()
         checkForTie()
 
-        if gameBoard.currentPlayer == .o {
+        if !isMultiplayer, gameBoard.currentPlayer == .o {
             makeAIMove(difficulty: difficulty)
         }
 

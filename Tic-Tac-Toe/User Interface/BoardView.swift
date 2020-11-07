@@ -15,12 +15,22 @@ struct BoardView: View {
             BoardGridView(rows: 3, columns: 3, size: 100)
                 .environmentObject(gameEnvironment)
                 .padding()
-            
-            Picker("Difficulty", selection: $gameEnvironment.difficulty) {
-                ForEach(OnePlayerMode.allCases) { mode in
-                    Text(mode.displayText).tag(mode)
-                }
-            }.pickerStyle(SegmentedPickerStyle())
+
+            Toggle("Multiplayer", isOn: $gameEnvironment.isMultiplayer)
+
+            if (gameEnvironment.isMultiplayer) {
+                Picker("Multiplayer Mode", selection: $gameEnvironment.twoPlayerMode) {
+                    ForEach(TwoPlayerMode.allCases) { mode in
+                        Text(mode.displayText).tag(mode)
+                    }
+                }.pickerStyle(SegmentedPickerStyle())
+            } else {
+                Picker("Difficulty", selection: $gameEnvironment.difficulty) {
+                    ForEach(OnePlayerMode.allCases) { mode in
+                        Text(mode.displayText).tag(mode)
+                    }
+                }.pickerStyle(SegmentedPickerStyle())
+            }
         }.alert(item: $gameEnvironment.endOfGameType) { endOfGameType in
             Alert(title: Text("Game over!"),
                   message: Text(endOfGameType.message),
