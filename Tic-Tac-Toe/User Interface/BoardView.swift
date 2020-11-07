@@ -11,8 +11,16 @@ struct BoardView: View {
     var body: some View {
         VStack {
             Text("Current Player: \(gameEnvironment.gameBoard.currentPlayer.token)")
+
             BoardGridView(rows: 3, columns: 3, size: 100)
                 .environmentObject(gameEnvironment)
+                .padding()
+            
+            Picker("Difficulty", selection: $gameEnvironment.difficulty) {
+                ForEach(OnePlayerMode.allCases) { mode in
+                    Text(mode.displayText).tag(mode)
+                }
+            }.pickerStyle(SegmentedPickerStyle())
         }.alert(item: $gameEnvironment.endOfGameType) { endOfGameType in
             Alert(title: Text("Game over!"),
                   message: Text(endOfGameType.message),

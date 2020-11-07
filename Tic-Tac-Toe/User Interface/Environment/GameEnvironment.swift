@@ -4,7 +4,11 @@ class GameEnvironment: ObservableObject {
 
     // MARK: - Public Properties
 
+    #warning("This needs to be reimplemented...")
+    @Published var gameMode: GameMode = .onePlayer(.easyMode)
+
     @Published var gameBoard: GameBoard = GameBoard()
+    @Published var difficulty: OnePlayerMode = .easyMode
     @Published var endOfGameType: EndOfGameType?
 
     // MARK: - Public Methods
@@ -37,9 +41,22 @@ class GameEnvironment: ObservableObject {
         checkForTie()
 
         if gameBoard.currentPlayer == .o {
-//            makeEasyAIMove()
-            makeHardAIMove()
+            makeAIMove(difficulty: difficulty)
         }
+
+//        switch gameMode {
+//        case let .onePlayer(mode):
+//            if gameBoard.currentPlayer == .o {
+//                makeAIMove(difficulty: mode)
+//            }
+//        case let .twoPlayer(mode):
+//            switch mode {
+//            case .localMode:
+//                break // Do nothing.
+//            case .networkMode:
+//                preconditionFailure("Not yet implemented yet...")
+//            }
+//        }
     }
 
     private func checkForWinner() {
@@ -48,7 +65,7 @@ class GameEnvironment: ObservableObject {
         }
 
         if gameBoard.hasWinner() {
-            endOfGameType = .winning(gameBoard.currentPlayer)
+            endOfGameType = .winning(gameBoard.currentPlayer.next)
         }
     }
 
@@ -62,25 +79,13 @@ class GameEnvironment: ObservableObject {
         }
     }
 
-    private func makeEasyAIMove() {
-        guard endOfGameType == nil else {
-            return
-        }
+    private func chooseRandomMove() -> Int {
+        assert(!gameBoard.emptyIndexes().isEmpty)
 
-        let emptyIndexes = gameBoard.emptyIndexes()
-
-        guard let randomIndex = emptyIndexes.randomElement() else {
-            return
-        }
-
-        updateBoardTokenFor(index: randomIndex)
+        return gameBoard.emptyIndexes().randomElement()!
     }
 
-    private func makeHardAIMove() {
-        guard endOfGameType == nil else {
-            return
-        }
-
+    private func chooseBestMove() -> Int {
         func minimax(gameBoard: GameBoard, maximizing: Bool, originalPlayer: PlayerToken) -> Int {
             if gameBoard.hasWinner() && originalPlayer == gameBoard.currentPlayer.next {
                 return 1
@@ -122,7 +127,33 @@ class GameEnvironment: ObservableObject {
             }
         }
 
-        updateBoardTokenFor(index: bestMove)
+        return bestMove
+    }
+
+    private func makeAIMove(difficulty: OnePlayerMode) {
+        guard endOfGameType == nil, !gameBoard.emptyIndexes().isEmpty else {
+            return
+        }
+
+        let index: Int = {
+            switch difficulty {
+            case .easyMode:
+                return chooseRandomMove()
+            case .hardMode:
+                let random = Int.random(in: 0...9)
+                if random > 7 {
+                    // Choose a random move 20% of the time.
+                    return chooseRandomMove()
+                } else {
+                    // Choose the best move 80% of the time.
+                    return chooseBestMove()
+                }
+            case .impossibleMode:
+                return chooseBestMove()
+            }
+        }()
+
+        updateBoardTokenFor(index: index)
     }
 
     // MARK: - Debug Methods
