@@ -10,7 +10,7 @@ struct BoardView: View {
 
     var body: some View {
         VStack {
-            Text("Current Player: \(gameEnvironment.currentPlayer.token)")
+            Text("Current Player: \(gameEnvironment.gameBoard.currentPlayer.token)")
             BoardGridView(rows: 3, columns: 3, size: 100)
                 .environmentObject(gameEnvironment)
         }.alert(item: $gameEnvironment.endOfGameType) { endOfGameType in

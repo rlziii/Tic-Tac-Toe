@@ -4,20 +4,14 @@ class GameEnvironment: ObservableObject {
 
     // MARK: - Public Properties
 
-    @Published var currentPlayer: PlayerToken = .x
+    @Published var gameBoard: GameBoard = GameBoard()
     @Published var endOfGameType: EndOfGameType?
-
-    // MARK: - Private Properties
-
-    private var gameBoard: GameBoard = GameBoard()
 
     // MARK: - Public Methods
 
     func resetGame() {
-        currentPlayer = .x
-        endOfGameType = nil
-
         gameBoard = GameBoard()
+        endOfGameType = nil
     }
 
     func boardTokenFor(row: Int, column: Int) -> PlayerToken? {
@@ -42,9 +36,7 @@ class GameEnvironment: ObservableObject {
         checkForWinner()
         checkForTie()
 
-        currentPlayer = currentPlayer.next
-
-        if currentPlayer == .o {
+        if gameBoard.currentPlayer == .o {
 //            makeEasyAIMove()
             makeHardAIMove()
         }
@@ -56,7 +48,7 @@ class GameEnvironment: ObservableObject {
         }
 
         if gameBoard.hasWinner() {
-            endOfGameType = .winning(currentPlayer)
+            endOfGameType = .winning(gameBoard.currentPlayer)
         }
     }
 
