@@ -13,7 +13,7 @@ struct BoardSpaceView: View {
     @EnvironmentObject private var gameEnvironment: GameEnvironment
 
     private var selection: PlayerToken? {
-        gameEnvironment.checkBoardPositionAt(row: row, column: column)
+        gameEnvironment.boardTokenFor(row: row, column: column)
     }
 
     // MARK: - Body
@@ -31,7 +31,7 @@ struct BoardSpaceView: View {
                     .frame(width: size, height: size)
             case .none:
                 Button(action: {
-                    gameEnvironment.updateBoardPosition(row: row, column: column)
+                    gameEnvironment.updateBoardTokenFor(row: row, column: column)
                 }, label: {
                     Text("")
                         .frame(width: size, height: size)
@@ -48,14 +48,14 @@ struct BoardSpaceView_Previews: PreviewProvider {
 
     static let xGameEnvironment: GameEnvironment = {
         let gameEnvironment = GameEnvironment()
-        gameEnvironment.updateBoardPosition(row: 0, column: 0)
+        gameEnvironment.updateBoardTokenFor(row: 0, column: 0)
         return gameEnvironment
     }()
 
     static let oGameEnvironment: GameEnvironment = {
         let gameEnvironment = GameEnvironment()
-        gameEnvironment.updateBoardPosition(row: 0, column: 1)
-        gameEnvironment.updateBoardPosition(row: 0, column: 0)
+        gameEnvironment.updateBoardTokenFor(row: 0, column: 1)
+        gameEnvironment.updateBoardTokenFor(row: 0, column: 0)
         return gameEnvironment
     }()
 

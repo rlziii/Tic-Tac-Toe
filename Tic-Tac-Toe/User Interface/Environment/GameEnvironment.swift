@@ -9,7 +9,7 @@ class GameEnvironment: ObservableObject {
 
     // MARK: - Private Properties
 
-    private var boardArray: [PlayerToken?] = createNewBoard()
+    private var gameBoard: GameBoard = .new
 
     // MARK: - Public Methods
 
@@ -17,57 +17,38 @@ class GameEnvironment: ObservableObject {
         currentPlayer = .x
         alertType = nil
 
-        boardArray = Self.createNewBoard()
+        gameBoard = .new
     }
 
-    func checkBoardPositionAt(row: Int, column: Int) -> PlayerToken? {
-        getBoardPositionAt(row: row, column: column)
+    func boardTokenFor(row: Int, column: Int) -> PlayerToken? {
+        gameBoard[row: row, column: column]
     }
 
-    func updateBoardPosition(index: Int) {
-        assert(validateIndexAt(index: index), "Attempting to check board with index out of bounds...")
+    func updateBoardTokenFor(row: Int, column: Int) {
+        updateBoardTokenFor(row: row, column: column, newValue: currentPlayer)
 
-        setBoardPositionAt(index: index, newValue: currentPlayer)
-
-        endOfTurnChecks()
-    }
-
-    func updateBoardPosition(row: Int, column: Int) {
-        assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
-
-        setBoardPositionAt(row: row, column: column, newValue: currentPlayer)
-
-        endOfTurnChecks()
+        endOfTurn()
     }
 
     // MARK: - Private Methods
 
-    private func boardPositionIndexAt(row: Int, column: Int) -> Int {
-        let rowLength = 3
-        return (row * rowLength) + column
+    private func updateBoardTokenFor(index: Int) {
+        updateBoardTokenFor(index: index, newValue: currentPlayer)
+
+        endOfTurn()
     }
 
-    private func getBoardPositionAt(row: Int, column: Int) -> PlayerToken? {
-        assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
-
-        let index = boardPositionIndexAt(row: row, column: column)
-        return boardArray[index]
+    private func updateBoardTokenFor(row: Int, column: Int, newValue: PlayerToken?) {
+        gameBoard[row: row, column: column] = newValue
     }
 
-    private func setBoardPositionAt(row: Int, column: Int, newValue: PlayerToken?) {
-        assert(validateIndexAt(row: row, column: column), "Attempting to check board with index out of bounds...")
-
-        let index = boardPositionIndexAt(row: row, column: column)
-        boardArray[index] = newValue
-    }
-
-    private func setBoardPositionAt(index: Int, newValue: PlayerToken?) {
+    private func updateBoardTokenFor(index: Int, newValue: PlayerToken?) {
         assert(validateIndexAt(index: index), "Attempting to check board with index out of bounds...")
 
-        boardArray[index] = newValue
+        gameBoard[index: index] = newValue
     }
 
-    private func endOfTurnChecks() {
+    private func endOfTurn() {
         checkForWinner()
         checkForTie()
 
@@ -78,26 +59,10 @@ class GameEnvironment: ObservableObject {
         }
     }
 
-    private func makeEasyAIMove() {
-        let emptyIndexes = boardArray.enumerated().compactMap { $1 == nil ? $0 : nil }
-
-        guard let randomIndex = emptyIndexes.randomElement() else {
-            return
-        }
-
-        updateBoardPosition(index: randomIndex)
-    }
-
     private func checkForWinner() {
         guard alertType == nil else {
             return
         }
-
-        /*
-         0 1 2
-         3 4 5
-         6 7 8
-         */
 
         let winningPaths = [
             [0, 1, 2], // Top row.
@@ -111,7 +76,7 @@ class GameEnvironment: ObservableObject {
         ]
 
         for path in winningPaths {
-            let set = Set(path.map { boardArray[$0] })
+            let set = Set(path.map { gameBoard[index: $0] })
 
             if set.count == 1, let selection = set.first, let selectionUnwrapped = selection {
                 alertType = .winning(selectionUnwrapped)
@@ -125,30 +90,30 @@ class GameEnvironment: ObservableObject {
             return
         }
 
-        if !boardArray.contains(nil) {
+        if !gameBoard.contains(nil) {
             alertType = .tie
         }
     }
 
-    private func validateIndexAt(row: Int, column: Int) -> Bool {
-        row >= 0 && row <= 2 && column >= 0 && column <= 2
+    private func makeEasyAIMove() {
+        let emptyIndexes = gameBoard.enumerated().compactMap { $1 == nil ? $0 : nil }
+
+        guard let randomIndex = emptyIndexes.randomElement() else {
+            return
+        }
+
+        updateBoardTokenFor(index: randomIndex)
     }
 
     private func validateIndexAt(index: Int) -> Bool {
-        index < boardArray.count
-    }
-
-    // MARK: - Private Type Methods
-
-    private static func createNewBoard() -> [PlayerToken?] {
-        Array(repeating: nil, count: 9)
+        index < gameBoard.count
     }
 
     // MARK: - Debug Methods
 
     func prettyPrintGameBoard() {
-        for index in 0...(boardArray.count - 1) {
-            let selection = boardArray[index]
+        for index in 0...(gameBoard.count - 1) {
+            let selection = gameBoard[index: index]
             let terminator = (index + 1).isMultiple(of: 3) ? "\n" : ""
             print(selection?.token ?? " ", terminator: terminator)
         }
