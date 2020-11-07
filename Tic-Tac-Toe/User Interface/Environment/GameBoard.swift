@@ -21,8 +21,23 @@ struct GameBoard {
 
     // MARK: - Public Methods
 
+    func hasWinner() -> Bool {
+        (boardArray[0] != nil && boardArray[0] == boardArray[1] && boardArray[0] == boardArray[2]) || // Top row.
+        (boardArray[3] != nil && boardArray[3] == boardArray[4] && boardArray[3] == boardArray[5]) || // Middle row.
+        (boardArray[6] != nil && boardArray[6] == boardArray[7] && boardArray[6] == boardArray[8]) || // Bottom row.
+        (boardArray[0] != nil && boardArray[0] == boardArray[3] && boardArray[0] == boardArray[6]) || // Left column.
+        (boardArray[1] != nil && boardArray[1] == boardArray[4] && boardArray[1] == boardArray[7]) || // Center column.
+        (boardArray[2] != nil && boardArray[2] == boardArray[5] && boardArray[2] == boardArray[8]) || // Right column.
+        (boardArray[0] != nil && boardArray[0] == boardArray[4] && boardArray[0] == boardArray[8]) || // Forward diagonal (\).
+        (boardArray[2] != nil && boardArray[2] == boardArray[4] && boardArray[2] == boardArray[6])    // Backward diagonal (/).
+    }
+
+    func isTie() -> Bool {
+        !hasWinner() && emptyIndexes().isEmpty
+    }
+
     func emptyIndexes() -> [Int] {
-        boardArray.enumerated().compactMap { $1 == nil ? $0 : nil }
+        boardArray.indices.filter { boardArray[$0] == nil }
     }
 
     func indexFor(row: Int, column: Int) -> Int {

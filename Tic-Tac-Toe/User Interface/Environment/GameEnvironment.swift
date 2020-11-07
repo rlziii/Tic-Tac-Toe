@@ -54,24 +54,8 @@ class GameEnvironment: ObservableObject {
             return
         }
 
-        let winningPaths = [
-            [0, 1, 2], // Top row.
-            [3, 4, 5], // Middle row.
-            [6, 7, 8], // Bottom row.
-            [0, 3, 6], // Left column.
-            [1, 4, 7], // Center column.
-            [2, 5, 8], // Right column.
-            [0, 4, 8], // Top-left-to-bottom-right diagonal (\).
-            [2, 4, 6], // Top-right-to-bottom-left diagonal (/).
-        ]
-
-        for path in winningPaths {
-            let set = Set(path.map { gameBoard[$0] })
-
-            if set.count == 1, let selection = set.first, let selectionUnwrapped = selection {
-                endOfGameType = .winning(selectionUnwrapped)
-                break
-            }
+        if gameBoard.hasWinner() {
+            endOfGameType = .winning(currentPlayer)
         }
     }
 
@@ -80,7 +64,7 @@ class GameEnvironment: ObservableObject {
             return
         }
 
-        if gameBoard.emptyIndexes().isEmpty {
+        if gameBoard.isTie() {
             endOfGameType = .tie
         }
     }
@@ -97,6 +81,12 @@ class GameEnvironment: ObservableObject {
         }
 
         updateBoardTokenFor(index: randomIndex)
+    }
+
+    private func makeHardAIMove() {
+//        func minimax(gameBoard: GameBoard, maximizing: Bool, originalPlayer: PlayerToken) -> Int {
+//            if board
+//        }
     }
 
     // MARK: - Debug Methods
