@@ -21,16 +21,34 @@ class GameEnvironment: ObservableObject {
     }
 
     func boardTokenFor(row: Int, column: Int) -> PlayerToken? {
-        gameBoard[row: row, column: column]
+        let index = boardIndexFor(row: row, column: column)
+        return gameBoard[index: index]
     }
 
     func updateBoardTokenFor(row: Int, column: Int) {
-        updateBoardTokenFor(row: row, column: column, newValue: currentPlayer)
+        let index = boardIndexFor(row: row, column: column)
+        gameBoard[index: index] = currentPlayer
 
         endOfTurn()
     }
 
     // MARK: - Private Methods
+
+    private func boardIndexFor(row: Int, column: Int) -> Int {
+        let rowLength = 3
+
+        let index = (row * rowLength) + column
+
+        assert(validateIndexFor(row: row, column: column), "Attempting to check board with index out of bounds...")
+
+        return index
+    }
+
+    private func validateIndexFor(row: Int, column: Int) -> Bool {
+        let rowLength = 3
+
+        return row >= 0 && row <= (rowLength - 1) && column >= 0 && column <= (rowLength - 1)
+    }
 
     private func updateBoardTokenFor(index: Int) {
         updateBoardTokenFor(index: index, newValue: currentPlayer)
@@ -38,13 +56,7 @@ class GameEnvironment: ObservableObject {
         endOfTurn()
     }
 
-    private func updateBoardTokenFor(row: Int, column: Int, newValue: PlayerToken?) {
-        gameBoard[row: row, column: column] = newValue
-    }
-
     private func updateBoardTokenFor(index: Int, newValue: PlayerToken?) {
-        assert(validateIndexAt(index: index), "Attempting to check board with index out of bounds...")
-
         gameBoard[index: index] = newValue
     }
 
@@ -103,10 +115,6 @@ class GameEnvironment: ObservableObject {
         }
 
         updateBoardTokenFor(index: randomIndex)
-    }
-
-    private func validateIndexAt(index: Int) -> Bool {
-        index < gameBoard.count
     }
 
     // MARK: - Debug Methods
