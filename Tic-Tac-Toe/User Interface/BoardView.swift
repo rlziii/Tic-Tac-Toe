@@ -13,9 +13,9 @@ struct BoardView: View {
             Text("Current Player: \(gameEnvironment.currentPlayer.token)")
             BoardGridView(rows: 3, columns: 3, size: 100)
                 .environmentObject(gameEnvironment)
-        }.alert(item: $gameEnvironment.alertType) { alertType in
+        }.alert(item: $gameEnvironment.endOfGameType) { endOfGameType in
             Alert(title: Text("Game over!"),
-                  message: Text(alertType.message),
+                  message: Text(endOfGameType.message),
                   dismissButton: .default(Text("Reset Game"), action: gameEnvironment.resetGame)
             )
         }

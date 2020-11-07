@@ -1,4 +1,4 @@
-enum AlertType: Identifiable {
+enum EndOfGameType: Identifiable {
 
     // MARK: - Enum Cases
 

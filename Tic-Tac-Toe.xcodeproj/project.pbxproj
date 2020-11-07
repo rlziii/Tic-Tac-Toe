@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		801B591D255613CE0009F577 /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B591C255613CE0009F577 /* AlertType.swift */; };
+		801B591D255613CE0009F577 /* EndOfGameType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B591C255613CE0009F577 /* EndOfGameType.swift */; };
 		801B5921255613E60009F577 /* PlayerToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B5920255613E60009F577 /* PlayerToken.swift */; };
 		801B59252556141A0009F577 /* GameEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B59242556141A0009F577 /* GameEnvironment.swift */; };
 		801B5929255614460009F577 /* BoardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B5928255614460009F577 /* BoardGridView.swift */; };
@@ -26,7 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		801B591C255613CE0009F577 /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
+		801B591C255613CE0009F577 /* EndOfGameType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndOfGameType.swift; sourceTree = "<group>"; };
 		801B5920255613E60009F577 /* PlayerToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerToken.swift; sourceTree = "<group>"; };
 		801B59242556141A0009F577 /* GameEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEnvironment.swift; sourceTree = "<group>"; };
 		801B5928255614460009F577 /* BoardGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardGridView.swift; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 		801B591B255613BC0009F577 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				801B591C255613CE0009F577 /* AlertType.swift */,
+				801B591C255613CE0009F577 /* EndOfGameType.swift */,
 				801B5920255613E60009F577 /* PlayerToken.swift */,
 			);
 			path = Enums;
@@ -215,7 +215,7 @@
 				802FB11D2553AFDC00DE410C /* Test.swift in Sources */,
 				801B592C255614620009F577 /* BoardSpaceView.swift in Sources */,
 				801B5921255613E60009F577 /* PlayerToken.swift in Sources */,
-				801B591D255613CE0009F577 /* AlertType.swift in Sources */,
+				801B591D255613CE0009F577 /* EndOfGameType.swift in Sources */,
 				802FB0FA2553AC8800DE410C /* BoardView.swift in Sources */,
 				802FB0F82553AC8800DE410C /* Application.swift in Sources */,
 				801B5929255614460009F577 /* BoardGridView.swift in Sources */,
