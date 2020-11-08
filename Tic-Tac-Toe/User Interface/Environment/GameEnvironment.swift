@@ -4,13 +4,10 @@ class GameEnvironment: ObservableObject {
 
     // MARK: - Public Properties
 
-    #warning("This needs to be reimplemented...")
-    @Published var gameMode: GameMode = .onePlayer(.easyMode)
-
     @Published var gameBoard: GameBoard = GameBoard()
     @Published var isMultiplayer = false
-    @Published var twoPlayerMode: TwoPlayerMode = .localMode
-    @Published var difficulty: OnePlayerMode = .easyMode
+    @Published var multiplayerMode: MultiplayerMode = .localMode
+    @Published var difficulty: DifficultyMode = .easyMode
     @Published var endOfGameType: EndOfGameType?
 
     // MARK: - Public Methods
@@ -42,23 +39,18 @@ class GameEnvironment: ObservableObject {
         checkForWinner()
         checkForTie()
 
-        if !isMultiplayer, gameBoard.currentPlayer == .o {
-            makeAIMove(difficulty: difficulty)
+        if isMultiplayer {
+            switch multiplayerMode {
+            case .localMode:
+                break // Do nothing.
+            case .networkMode:
+                preconditionFailure("Not yet implemented.")
+            }
+        } else {
+            if gameBoard.currentPlayer == .o {
+                makeAIMove(difficulty: difficulty)
+            }
         }
-
-//        switch gameMode {
-//        case let .onePlayer(mode):
-//            if gameBoard.currentPlayer == .o {
-//                makeAIMove(difficulty: mode)
-//            }
-//        case let .twoPlayer(mode):
-//            switch mode {
-//            case .localMode:
-//                break // Do nothing.
-//            case .networkMode:
-//                preconditionFailure("Not yet implemented yet...")
-//            }
-//        }
     }
 
     private func checkForWinner() {
@@ -132,7 +124,7 @@ class GameEnvironment: ObservableObject {
         return bestMove
     }
 
-    private func makeAIMove(difficulty: OnePlayerMode) {
+    private func makeAIMove(difficulty: DifficultyMode) {
         guard endOfGameType == nil, !gameBoard.emptyIndexes().isEmpty else {
             return
         }

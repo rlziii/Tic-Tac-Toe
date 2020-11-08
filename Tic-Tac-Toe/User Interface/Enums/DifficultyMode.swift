@@ -1,4 +1,4 @@
-enum OnePlayerMode: String, CaseIterable, Identifiable {
+enum DifficultyMode: String, CaseIterable, Identifiable {
     case easyMode
     case hardMode
     case impossibleMode

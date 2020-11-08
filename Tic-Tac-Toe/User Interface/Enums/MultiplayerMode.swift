@@ -1,4 +1,4 @@
-enum TwoPlayerMode: String, CaseIterable, Identifiable {
+enum MultiplayerMode: String, CaseIterable, Identifiable {
     case localMode
     case networkMode
 

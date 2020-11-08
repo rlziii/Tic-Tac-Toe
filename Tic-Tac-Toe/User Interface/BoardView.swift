@@ -2,6 +2,10 @@ import SwiftUI
 
 struct BoardView: View {
 
+    // MARK: - Public Properties
+
+    var isMultiplayer: Bool
+
     // MARK: - Private Properties
 
     @EnvironmentObject private var gameEnvironment: GameEnvironment
@@ -16,26 +20,27 @@ struct BoardView: View {
                 .environmentObject(gameEnvironment)
                 .padding()
 
-            Toggle("Multiplayer", isOn: $gameEnvironment.isMultiplayer)
-
             if (gameEnvironment.isMultiplayer) {
-                Picker("Multiplayer Mode", selection: $gameEnvironment.twoPlayerMode) {
-                    ForEach(TwoPlayerMode.allCases) { mode in
+                Picker("Multiplayer Mode", selection: $gameEnvironment.multiplayerMode) {
+                    ForEach(MultiplayerMode.allCases) { mode in
                         Text(mode.displayText).tag(mode)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
             } else {
                 Picker("Difficulty", selection: $gameEnvironment.difficulty) {
-                    ForEach(OnePlayerMode.allCases) { mode in
+                    ForEach(DifficultyMode.allCases) { mode in
                         Text(mode.displayText).tag(mode)
                     }
                 }.pickerStyle(SegmentedPickerStyle())
+
             }
         }.alert(item: $gameEnvironment.endOfGameType) { endOfGameType in
             Alert(title: Text("Game over!"),
                   message: Text(endOfGameType.message),
                   dismissButton: .default(Text("Reset Game"), action: gameEnvironment.resetGame)
             )
+        }.onAppear {
+            gameEnvironment.isMultiplayer = isMultiplayer
         }
     }
 }
@@ -44,7 +49,7 @@ struct BoardView: View {
 
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardView()
+        BoardView(isMultiplayer: false)
             .environmentObject(GameEnvironment())
     }
 }

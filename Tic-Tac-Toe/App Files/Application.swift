@@ -10,7 +10,7 @@ struct Application: App {
 
     var body: some Scene {
         WindowGroup {
-            BoardView()
+            ModeSelectView()
                 .environmentObject(gameEnvironment)
         }
     }
