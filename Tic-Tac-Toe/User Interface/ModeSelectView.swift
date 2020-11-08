@@ -11,17 +11,17 @@ struct ModeSelectView: View {
 
                 Spacer()
 
-                NavigationLink("Single Player", destination: BoardView(isMultiplayer: false))
+                NavigationLink("👤 Single Player", destination: BoardView(isMultiplayer: false))
                     .padding()
 
-                NavigationLink("Local Two Player", destination: BoardView(isMultiplayer: true))
+                NavigationLink("👥 Local Two Player", destination: BoardView(isMultiplayer: true))
                     .padding()
 
                 NavigationLink(
                     destination: BoardView(isMultiplayer: true),
                     isActive: .constant(false),
                     label: {
-                        Text("Network Two Player").foregroundColor(.gray)
+                        Text("🌎 Network Two Player").foregroundColor(.gray)
                     })
                     .padding()
 

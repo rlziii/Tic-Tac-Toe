@@ -14,19 +14,15 @@ struct BoardView: View {
 
     var body: some View {
         VStack {
-            Text("Current Player: \(gameEnvironment.gameBoard.currentPlayer.token)")
+            if (gameEnvironment.isMultiplayer) {
+                Text("Current Player: \(gameEnvironment.gameBoard.currentPlayer.token)")
+            }
 
             BoardGridView(rows: 3, columns: 3, size: 100)
                 .environmentObject(gameEnvironment)
                 .padding()
 
-            if (gameEnvironment.isMultiplayer) {
-                Picker("Multiplayer Mode", selection: $gameEnvironment.multiplayerMode) {
-                    ForEach(MultiplayerMode.allCases) { mode in
-                        Text(mode.displayText).tag(mode)
-                    }
-                }.pickerStyle(SegmentedPickerStyle())
-            } else {
+            if (!gameEnvironment.isMultiplayer) {
                 Picker("Difficulty", selection: $gameEnvironment.difficulty) {
                     ForEach(DifficultyMode.allCases) { mode in
                         Text(mode.displayText).tag(mode)
