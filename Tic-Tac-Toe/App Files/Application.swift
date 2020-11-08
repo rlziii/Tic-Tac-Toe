@@ -8,6 +8,8 @@ struct Application: App {
     @StateObject private var gameEnvironment = GameEnvironment()
     private let firebaseManager = FirebaseManager()
 
+    // MARK: - Body
+    
     var body: some Scene {
         WindowGroup {
             ModeSelectView()

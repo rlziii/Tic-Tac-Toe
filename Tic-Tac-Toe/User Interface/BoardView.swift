@@ -37,6 +37,7 @@ struct BoardView: View {
             )
         }.onAppear {
             gameEnvironment.isMultiplayer = isMultiplayer
+            gameEnvironment.resetGame()
         }
     }
 }

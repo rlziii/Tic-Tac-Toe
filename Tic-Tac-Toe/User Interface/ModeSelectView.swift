@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct ModeSelectView: View {
+
+    // MARK: - Body
+    
     var body: some View {
         NavigationView {
             VStack {

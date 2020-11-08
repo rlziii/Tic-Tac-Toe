@@ -5,10 +5,11 @@ class GameEnvironment: ObservableObject {
     // MARK: - Public Properties
 
     @Published var gameBoard: GameBoard = GameBoard()
+    @Published var endOfGameType: EndOfGameType?
+    
     @Published var isMultiplayer = false
     @Published var multiplayerMode: MultiplayerMode = .localMode
     @Published var difficulty: DifficultyMode = .easyMode
-    @Published var endOfGameType: EndOfGameType?
 
     // MARK: - Public Methods
 
