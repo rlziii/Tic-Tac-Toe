@@ -23,8 +23,10 @@
 		802FB1122553AE5700DE410C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 802FB1112553AE5700DE410C /* FirebaseFirestore */; };
 		802FB1142553AE5700DE410C /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 802FB1132553AE5700DE410C /* FirebaseFirestoreSwift-Beta */; };
 		802FB1192553AE7200DE410C /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802FB1182553AE7200DE410C /* FirebaseManager.swift */; };
-		802FB11D2553AFDC00DE410C /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802FB11C2553AFDC00DE410C /* Test.swift */; };
 		802FB1212553B4AD00DE410C /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802FB1202553B4AD00DE410C /* FirebaseError.swift */; };
+		80739BBA2558FE07006E6E26 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80739BB92558FE07006E6E26 /* Game.swift */; };
+		80739BBF2558FEFA006E6E26 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80739BBE2558FEFA006E6E26 /* Player.swift */; };
+		80739BC32558FF0B006E6E26 /* BoardSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80739BC22558FF0B006E6E26 /* BoardSpace.swift */; };
 		807621DF25579F860029287B /* ModeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807621DE25579F860029287B /* ModeSelectView.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,8 +46,10 @@
 		802FB1002553AC8800DE410C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		802FB10B2553AD9600DE410C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		802FB1182553AE7200DE410C /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		802FB11C2553AFDC00DE410C /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		802FB1202553B4AD00DE410C /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
+		80739BB92558FE07006E6E26 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		80739BBE2558FEFA006E6E26 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		80739BC22558FF0B006E6E26 /* BoardSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSpace.swift; sourceTree = "<group>"; };
 		807621DE25579F860029287B /* ModeSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSelectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,11 +140,29 @@
 		802FB1152553AE5F00DE410C /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
+				80739BBC2558FEE4006E6E26 /* Models */,
 				802FB1202553B4AD00DE410C /* FirebaseError.swift */,
 				802FB1182553AE7200DE410C /* FirebaseManager.swift */,
-				802FB11C2553AFDC00DE410C /* Test.swift */,
 			);
 			path = Firebase;
+			sourceTree = "<group>";
+		};
+		80739BBC2558FEE4006E6E26 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				80739BBD2558FEEA006E6E26 /* Enums */,
+				80739BB92558FE07006E6E26 /* Game.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		80739BBD2558FEEA006E6E26 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				80739BC22558FF0B006E6E26 /* BoardSpace.swift */,
+				80739BBE2558FEFA006E6E26 /* Player.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,8 +243,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				802FB1192553AE7200DE410C /* FirebaseManager.swift in Sources */,
+				80739BBA2558FE07006E6E26 /* Game.swift in Sources */,
 				807621DF25579F860029287B /* ModeSelectView.swift in Sources */,
-				802FB11D2553AFDC00DE410C /* Test.swift in Sources */,
+				80739BBF2558FEFA006E6E26 /* Player.swift in Sources */,
+				80739BC32558FF0B006E6E26 /* BoardSpace.swift in Sources */,
 				801B593C255708E20009F577 /* MultiplayerMode.swift in Sources */,
 				801B592C255614620009F577 /* BoardSpaceView.swift in Sources */,
 				801B5921255613E60009F577 /* PlayerToken.swift in Sources */,
