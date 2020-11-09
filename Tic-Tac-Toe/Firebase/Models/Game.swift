@@ -3,16 +3,25 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct Game: Codable, Identifiable {
-    static let collectionName = "Game"
+
+    // Private Type Properties
+
+    private static let collectionName = "Game"
+
+    // Public Properties
 
     @DocumentID var id: String?
     let boardArray: [BoardSpace]
     let currentPlayer: Player
 
+    // Public Methods
+
     func gameBoard() -> GameBoard {
         GameBoard(boardArray: boardArray.map { $0.playerToken() },
                   currentPlayer: currentPlayer.playerToken())
     }
+
+    // Public Type Methods
 
     static func addListener(for id: String, completion: @escaping (Result<Self, FirebaseError>) -> Void) -> ListenerRegistration {
         Firestore.firestore().collection(Self.collectionName).document(id).addSnapshotListener { snapshot, error in
@@ -84,7 +93,9 @@ struct Game: Codable, Identifiable {
         }
     }
 
-    static func isValidGameBoardChange(oldBoard: [BoardSpace], newBoard: [BoardSpace]) -> Bool {
+    // Private Type Methods
+    
+    private static func isValidGameBoardChange(oldBoard: [BoardSpace], newBoard: [BoardSpace]) -> Bool {
         guard oldBoard.count == newBoard.count else {
             return false
         }
