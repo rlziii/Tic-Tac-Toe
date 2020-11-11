@@ -12,6 +12,7 @@ struct Game: Codable, Identifiable {
 
     @DocumentID var id: String?
     let boardArray: [BoardSpace]
+    #warning("Update to be a real player model with UID, names, et cetera.")
     let currentPlayer: Player
 
     // Public Methods

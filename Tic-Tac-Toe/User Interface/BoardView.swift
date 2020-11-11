@@ -19,8 +19,8 @@ struct BoardView: View {
             }
 
             BoardGridView(rows: 3, columns: 3, size: 100)
-                .environmentObject(gameEnvironment)
                 .padding()
+                .environmentObject(gameEnvironment)
 
             if (!gameEnvironment.isMultiplayer) {
                 Picker("Difficulty", selection: $gameEnvironment.difficulty) {

@@ -30,7 +30,7 @@ struct BoardGridView: View {
                     }
                 }
             }
-        }
+        }.background(Color.primary)
     }
 }
 

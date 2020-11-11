@@ -23,6 +23,7 @@ struct BoardSpaceView: View {
             Rectangle()
                 .size(width: size, height: size)
                 .frame(width: size, height: size)
+                .foregroundColor(.background)
 
             switch selection {
             case .x, .o:
