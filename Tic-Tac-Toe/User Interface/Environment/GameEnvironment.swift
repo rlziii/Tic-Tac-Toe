@@ -81,7 +81,7 @@ class GameEnvironment: ObservableObject {
     }
 
     private func chooseBestMove() -> Int {
-        func minimax(gameBoard: GameBoard, maximizing: Bool, originalPlayer: PlayerToken) -> Int {
+        func minimax(gameBoard: GameBoard, maximizing: Bool, originalPlayer: PlayerToken, alpha: Int, beta: Int) -> Int {
             if gameBoard.hasWinner() && originalPlayer == gameBoard.currentPlayer.next {
                 return 1
             } else if gameBoard.hasWinner() && originalPlayer != gameBoard.currentPlayer.next {
@@ -94,7 +94,13 @@ class GameEnvironment: ObservableObject {
                 var bestEvaluation = Int.min
 
                 for index in gameBoard.emptyIndexes() {
-                    let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: false, originalPlayer: originalPlayer)
+                    let alpha = max(bestEvaluation, alpha)
+
+                    if alpha >= beta {
+                        break
+                    }
+
+                    let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: false, originalPlayer: originalPlayer, alpha: alpha, beta: beta)
                     bestEvaluation = max(result, bestEvaluation)
                 }
 
@@ -103,7 +109,13 @@ class GameEnvironment: ObservableObject {
                 var worstEvaluation = Int.max
 
                 for index in gameBoard.emptyIndexes() {
-                    let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: true, originalPlayer: originalPlayer)
+                    let beta = min(worstEvaluation, beta)
+
+                    if alpha >= beta {
+                        break
+                    }
+
+                    let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: true, originalPlayer: originalPlayer, alpha: alpha, beta: beta)
                     worstEvaluation = min(result, worstEvaluation)
                 }
 
@@ -115,7 +127,7 @@ class GameEnvironment: ObservableObject {
         var bestMove = -1
 
         for index in gameBoard.emptyIndexes() {
-            let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: false, originalPlayer: gameBoard.currentPlayer)
+            let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: false, originalPlayer: gameBoard.currentPlayer, alpha: Int.min, beta: Int.max)
             if result > bestEvaluation {
                 bestEvaluation = result
                 bestMove = index
