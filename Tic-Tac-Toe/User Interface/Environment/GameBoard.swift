@@ -22,16 +22,26 @@ struct GameBoard {
     }
 
     // MARK: - Public Methods
-
+    
     func hasWinner() -> Bool {
-        (boardArray[0] != nil && boardArray[0] == boardArray[1] && boardArray[0] == boardArray[2]) || // Top row.
-        (boardArray[3] != nil && boardArray[3] == boardArray[4] && boardArray[3] == boardArray[5]) || // Middle row.
-        (boardArray[6] != nil && boardArray[6] == boardArray[7] && boardArray[6] == boardArray[8]) || // Bottom row.
-        (boardArray[0] != nil && boardArray[0] == boardArray[3] && boardArray[0] == boardArray[6]) || // Left column.
-        (boardArray[1] != nil && boardArray[1] == boardArray[4] && boardArray[1] == boardArray[7]) || // Center column.
-        (boardArray[2] != nil && boardArray[2] == boardArray[5] && boardArray[2] == boardArray[8]) || // Right column.
-        (boardArray[0] != nil && boardArray[0] == boardArray[4] && boardArray[0] == boardArray[8]) || // Forward diagonal (\).
-        (boardArray[2] != nil && boardArray[2] == boardArray[4] && boardArray[2] == boardArray[6])    // Backward diagonal (/).
+        boardPositionsMatch(0, 1, 2) || // Top row.
+        boardPositionsMatch(3, 4, 5) || // Middle row.
+        boardPositionsMatch(6, 7, 8) || // Bottom row.
+        boardPositionsMatch(0, 3, 6) || // Left column.
+        boardPositionsMatch(1, 4, 7) || // Center column.
+        boardPositionsMatch(2, 5, 8) || // Right column.
+        boardPositionsMatch(0, 4, 8) || // Forward diagonal (\).
+        boardPositionsMatch(2, 4, 6)    // Backward diagonal (/).
+    }
+
+    private func boardPositionsMatch(_ positions: Int...) -> Bool {
+        let playerTokenSet = Set(positions.map { boardArray[$0] })
+
+        guard playerTokenSet.count == 1, let playerToken = playerTokenSet.first else {
+            return false
+        }
+
+        return playerToken != nil
     }
 
     func isTie() -> Bool {
