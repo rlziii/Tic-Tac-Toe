@@ -17,7 +17,6 @@
 		802FB0F82553AC8800DE410C /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802FB0F72553AC8800DE410C /* Application.swift */; };
 		802FB0FA2553AC8800DE410C /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802FB0F92553AC8800DE410C /* BoardView.swift */; };
 		802FB0FC2553AC8800DE410C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 802FB0FB2553AC8800DE410C /* Assets.xcassets */; };
-		8040DEF5255C61950057C63C /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8040DEF4255C61950057C63C /* ColorExtensions.swift */; };
 		807621DF25579F860029287B /* ModeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807621DE25579F860029287B /* ModeSelectView.swift */; };
 /* End PBXBuildFile section */
 
@@ -34,7 +33,6 @@
 		802FB0F92553AC8800DE410C /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		802FB0FB2553AC8800DE410C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		802FB1002553AC8800DE410C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8040DEF4255C61950057C63C /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		807621DE25579F860029287B /* ModeSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSelectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,7 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				802FB1072553ACBD00DE410C /* App Files */,
-				8040DEF3255C61750057C63C /* Extensions */,
 				802FB1092553ACFF00DE410C /* User Interface */,
 			);
 			path = "Tic-Tac-Toe";
@@ -115,14 +112,6 @@
 				807621DE25579F860029287B /* ModeSelectView.swift */,
 			);
 			path = "User Interface";
-			sourceTree = "<group>";
-		};
-		8040DEF3255C61750057C63C /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				8040DEF4255C61950057C63C /* ColorExtensions.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,7 +196,6 @@
 				801B59252556141A0009F577 /* GameEnvironment.swift in Sources */,
 				801B5939255708B90009F577 /* DifficultyMode.swift in Sources */,
 				801B593125564A090009F577 /* GameBoard.swift in Sources */,
-				8040DEF5255C61950057C63C /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
