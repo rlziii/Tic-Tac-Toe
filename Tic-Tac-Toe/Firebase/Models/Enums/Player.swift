@@ -1,4 +1,4 @@
-enum Player: String, Codable {
+enum PlayerType: String, Codable {
     case x
     case o
 
