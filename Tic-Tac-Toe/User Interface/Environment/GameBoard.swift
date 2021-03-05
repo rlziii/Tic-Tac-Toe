@@ -7,7 +7,7 @@ struct GameBoard {
     // MARK: - Private Properties
 
     private let boardArray: [PlayerToken?]
-    private static let rowLength = 3
+    private let rowLength = 3
 
     init(boardArray: [PlayerToken?] = Array(repeating: nil, count: 9), currentPlayer: PlayerToken = .x) {
         self.boardArray = boardArray
@@ -53,7 +53,7 @@ struct GameBoard {
     }
 
     func indexFor(row: Int, column: Int) -> Int {
-        let index = (row * Self.rowLength) + column
+        let index = (row * rowLength) + column
 
         assert(validate(row: row, column: column), "Attempting to check board with index out of bounds...")
 
@@ -75,6 +75,6 @@ struct GameBoard {
     }
 
     private func validate(row: Int, column: Int) -> Bool {
-        row >= 0 && row <= (Self.rowLength - 1) && column >= 0 && column <= (Self.rowLength - 1)
+        row >= 0 && row <= (rowLength - 1) && column >= 0 && column <= (rowLength - 1)
     }
 }

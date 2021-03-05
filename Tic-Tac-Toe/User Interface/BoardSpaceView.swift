@@ -55,6 +55,7 @@ struct BoardSpaceView_Previews: PreviewProvider {
 
     static let oGameEnvironment: GameEnvironment = {
         let gameEnvironment = GameEnvironment()
+        gameEnvironment.isMultiplayer = true
         gameEnvironment.updateBoardTokenFor(row: 0, column: 1)
         gameEnvironment.updateBoardTokenFor(row: 0, column: 0)
         return gameEnvironment
@@ -63,15 +64,21 @@ struct BoardSpaceView_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
             // Shows an empty space.
+            // Red border is for visual debugging only.
             BoardSpaceView(size: 100, row: 0, column: 0)
+                .border(Color.red, width: 1)
                 .environmentObject(emptyGameEnvironment)
 
             // Shows an ❌ space.
+            // Red border is for visual debugging only.
             BoardSpaceView(size: 100, row: 0, column: 0)
+                .border(Color.red, width: 1)
                 .environmentObject(xGameEnvironment)
 
             // Shows an ⭕️ space.
+            // Red border is for visual debugging only.
             BoardSpaceView(size: 100, row: 0, column: 0)
+                .border(Color.red, width: 1)
                 .environmentObject(oGameEnvironment)
         }
     }

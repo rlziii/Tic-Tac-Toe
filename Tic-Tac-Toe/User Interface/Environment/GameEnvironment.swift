@@ -5,10 +5,9 @@ class GameEnvironment: ObservableObject {
     // MARK: - Public Properties
 
     @Published var gameBoard: GameBoard = GameBoard()
-    @Published var endOfGameType: EndOfGameType?
+    @Published var endOfGameType: EndOfGameType? = nil
     
     @Published var isMultiplayer = false
-    @Published var multiplayerMode: MultiplayerMode = .localMode
     @Published var difficulty: DifficultyMode = .easyMode
 
     // MARK: - Public Methods
@@ -40,14 +39,7 @@ class GameEnvironment: ObservableObject {
         checkForWinner()
         checkForTie()
 
-        if isMultiplayer {
-            switch multiplayerMode {
-            case .localMode:
-                break // Do nothing.
-            case .networkMode:
-                preconditionFailure("Not yet implemented.")
-            }
-        } else {
+        if !isMultiplayer {
             if gameBoard.currentPlayer == .o {
                 makeAIMove(difficulty: difficulty)
             }
