@@ -4,7 +4,8 @@ struct BoardView: View {
 
     // MARK: - Private Properties
 
-    @StateObject private var game: Game
+    private var isMultiplayer: Bool
+    @StateObject private var game = Game()
 
     // MARK: - Body
 
@@ -15,13 +16,15 @@ struct BoardView: View {
             }
 
             BoardGridView(rows: 3, columns: 3, size: 100)
-                .padding()
                 .environmentObject(game)
-        }.alert(item: $game.endOfGameType, content: endOfGameAlert)
+                .padding()
+        }
+        .onAppear { game.isMultiplayer = isMultiplayer }
+        .alert(item: $game.endOfGameType, content: endOfGameAlert)
     }
 
     init(isMultiplayer: Bool) {
-        _game = StateObject(wrappedValue: Game(isMultiplayer: isMultiplayer))
+        self.isMultiplayer = isMultiplayer
     }
 
     private func endOfGameAlert(with type: EndOfGameType) -> Alert {
