@@ -15,7 +15,7 @@ struct BoardView: View {
                 Text("Current Player: \(game.gameBoard.currentPlayer.token)")
             }
 
-            BoardGridView(rows: 3, columns: 3, size: 100, game: game)
+            BoardGridView(rows: 3, columns: 3, game: game)
                 .environmentObject(game)
                 .padding()
         }
