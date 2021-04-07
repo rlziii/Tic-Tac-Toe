@@ -2,34 +2,32 @@ import SwiftUI
 
 struct ModeSelectView: View {
 
+    let gridImage: some View = Image(systemName: "grid").font(.body)
+    let singlePlayerImage = Image(systemName: "person.fill")
+    let multiPlayerImage = Image(systemName: "person.2.fill")
+
     // MARK: - Body
     
     var body: some View {
         NavigationView {
             VStack {
-                Spacer()
-
-                Text("Tic-Tac-Toe")
-                    .font(.largeTitle)
-
-                Spacer()
-
-                NavigationLink("👤 Single Player", destination: BoardView(isMultiplayer: false))
-                    .padding()
-
-                NavigationLink("👥 Local Two Player", destination: BoardView(isMultiplayer: true))
-                    .padding()
+                HStack {
+                    gridImage
+                    Text("Tic-Tac-Toe").font(.largeTitle)
+                    gridImage
+                }.padding()
 
                 NavigationLink(
-                    destination: BoardView(isMultiplayer: true),
-                    isActive: .constant(false),
-                    label: {
-                        Text("🌎 Network Two Player").foregroundColor(.gray)
-                    })
-                    .padding()
+                    "\(singlePlayerImage) Single Player",
+                    destination: BoardView(isMultiplayer: false)
+                ).padding(.top)
 
-                Spacer()
-            }.navigationBarTitle("Mode Select")
+                NavigationLink(
+                    "\(multiPlayerImage) Local Two Player",
+                    destination: BoardView(isMultiplayer: true)
+                ).padding()
+            }
+            .navigationBarTitle("Mode Select")
             .navigationBarHidden(true)
         }
     }
