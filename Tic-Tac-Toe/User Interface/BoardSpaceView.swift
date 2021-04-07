@@ -5,16 +5,8 @@ struct BoardSpaceView: View {
     // MARK: - Public Properties
 
     let size: CGFloat
-    let row: Int
-    let column: Int
-
-    // MARK: - Private Properties
-
-    @EnvironmentObject private var game: Game
-
-    private var selection: PlayerToken? {
-        game.boardTokenFor(row: row, column: column)
-    }
+    let selection: PlayerToken?
+    var action: () -> Void = {}
 
     // MARK: - Body
 
@@ -31,9 +23,7 @@ struct BoardSpaceView: View {
                     .font(.largeTitle)
                     .frame(width: size, height: size)
             case .none:
-                Button(action: {
-                    game.updateBoardTokenFor(row: row, column: column)
-                }, label: {
+                Button(action: action, label: {
                     Text("")
                         .frame(width: size, height: size)
                 })
@@ -45,41 +35,22 @@ struct BoardSpaceView: View {
 // MARK: - Previews
 
 struct BoardSpaceView_Previews: PreviewProvider {
-    static let emptyGame = Game()
-
-    static let xGame: Game = {
-        let game = Game()
-        game.updateBoardTokenFor(row: 0, column: 0)
-        return game
-    }()
-
-    static let oGame: Game = {
-        let game = Game()
-        game.isMultiplayer = true
-        game.updateBoardTokenFor(row: 0, column: 1)
-        game.updateBoardTokenFor(row: 0, column: 0)
-        return game
-    }()
-
     static var previews: some View {
         HStack {
             // Shows an empty space.
             // Red border is for visual debugging only.
-            BoardSpaceView(size: 100, row: 0, column: 0)
+            BoardSpaceView(size: 100, selection: .none)
                 .border(Color.red, width: 1)
-                .environmentObject(emptyGame)
 
             // Shows an ❌ space.
             // Red border is for visual debugging only.
-            BoardSpaceView(size: 100, row: 0, column: 0)
+            BoardSpaceView(size: 100, selection: .x)
                 .border(Color.red, width: 1)
-                .environmentObject(xGame)
 
             // Shows an ⭕️ space.
             // Red border is for visual debugging only.
-            BoardSpaceView(size: 100, row: 0, column: 0)
+            BoardSpaceView(size: 100, selection: .o)
                 .border(Color.red, width: 1)
-                .environmentObject(oGame)
         }
     }
 }
