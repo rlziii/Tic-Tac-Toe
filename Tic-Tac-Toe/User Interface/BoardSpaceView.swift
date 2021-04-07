@@ -10,10 +10,10 @@ struct BoardSpaceView: View {
 
     // MARK: - Private Properties
 
-    @EnvironmentObject private var gameEnvironment: GameEnvironment
+    @EnvironmentObject private var game: Game
 
     private var selection: PlayerToken? {
-        gameEnvironment.boardTokenFor(row: row, column: column)
+        game.boardTokenFor(row: row, column: column)
     }
 
     // MARK: - Body
@@ -32,7 +32,7 @@ struct BoardSpaceView: View {
                     .frame(width: size, height: size)
             case .none:
                 Button(action: {
-                    gameEnvironment.updateBoardTokenFor(row: row, column: column)
+                    game.updateBoardTokenFor(row: row, column: column)
                 }, label: {
                     Text("")
                         .frame(width: size, height: size)
@@ -45,20 +45,20 @@ struct BoardSpaceView: View {
 // MARK: - Previews
 
 struct BoardSpaceView_Previews: PreviewProvider {
-    static let emptyGameEnvironment = GameEnvironment()
+    static let emptyGame = Game()
 
-    static let xGameEnvironment: GameEnvironment = {
-        let gameEnvironment = GameEnvironment()
-        gameEnvironment.updateBoardTokenFor(row: 0, column: 0)
-        return gameEnvironment
+    static let xGame: Game = {
+        let game = Game()
+        game.updateBoardTokenFor(row: 0, column: 0)
+        return game
     }()
 
-    static let oGameEnvironment: GameEnvironment = {
-        let gameEnvironment = GameEnvironment()
-        gameEnvironment.isMultiplayer = true
-        gameEnvironment.updateBoardTokenFor(row: 0, column: 1)
-        gameEnvironment.updateBoardTokenFor(row: 0, column: 0)
-        return gameEnvironment
+    static let oGame: Game = {
+        let game = Game()
+        game.isMultiplayer = true
+        game.updateBoardTokenFor(row: 0, column: 1)
+        game.updateBoardTokenFor(row: 0, column: 0)
+        return game
     }()
 
     static var previews: some View {
@@ -67,19 +67,19 @@ struct BoardSpaceView_Previews: PreviewProvider {
             // Red border is for visual debugging only.
             BoardSpaceView(size: 100, row: 0, column: 0)
                 .border(Color.red, width: 1)
-                .environmentObject(emptyGameEnvironment)
+                .environmentObject(emptyGame)
 
             // Shows an ❌ space.
             // Red border is for visual debugging only.
             BoardSpaceView(size: 100, row: 0, column: 0)
                 .border(Color.red, width: 1)
-                .environmentObject(xGameEnvironment)
+                .environmentObject(xGame)
 
             // Shows an ⭕️ space.
             // Red border is for visual debugging only.
             BoardSpaceView(size: 100, row: 0, column: 0)
                 .border(Color.red, width: 1)
-                .environmentObject(oGameEnvironment)
+                .environmentObject(oGame)
         }
     }
 }

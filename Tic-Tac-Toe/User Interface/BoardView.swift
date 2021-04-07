@@ -2,42 +2,33 @@ import SwiftUI
 
 struct BoardView: View {
 
-    // MARK: - Public Properties
-
-    var isMultiplayer: Bool
-
     // MARK: - Private Properties
 
-    @EnvironmentObject private var gameEnvironment: GameEnvironment
+    @StateObject private var game: Game
 
     // MARK: - Body
 
     var body: some View {
         VStack {
-            if (gameEnvironment.isMultiplayer) {
-                Text("Current Player: \(gameEnvironment.gameBoard.currentPlayer.token)")
+            if (game.isMultiplayer) {
+                Text("Current Player: \(game.gameBoard.currentPlayer.token)")
             }
 
             BoardGridView(rows: 3, columns: 3, size: 100)
                 .padding()
+                .environmentObject(game)
+        }.alert(item: $game.endOfGameType, content: endOfGameAlert)
+    }
 
-            if (!gameEnvironment.isMultiplayer) {
-                Picker("Difficulty", selection: $gameEnvironment.difficulty) {
-                    ForEach(DifficultyMode.allCases) { mode in
-                        Text(mode.displayText).tag(mode)
-                    }
-                }.pickerStyle(SegmentedPickerStyle())
+    init(isMultiplayer: Bool) {
+        _game = StateObject(wrappedValue: Game(isMultiplayer: isMultiplayer))
+    }
 
-            }
-        }.alert(item: $gameEnvironment.endOfGameType) { endOfGameType in
-            Alert(title: Text("Game over!"),
-                  message: Text(endOfGameType.message),
-                  dismissButton: .default(Text("Reset Game"), action: gameEnvironment.resetGame)
-            )
-        }.onAppear {
-            gameEnvironment.isMultiplayer = isMultiplayer
-            gameEnvironment.resetGame()
-        }
+    private func endOfGameAlert(with type: EndOfGameType) -> Alert {
+        Alert(title: Text("Game over!"),
+              message: Text(type.message),
+              dismissButton: .default(Text("Reset Game"), action: game.resetGame)
+        )
     }
 }
 
@@ -46,6 +37,5 @@ struct BoardView: View {
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
         BoardView(isMultiplayer: false)
-            .environmentObject(GameEnvironment())
     }
 }

@@ -2,7 +2,7 @@ enum EndOfGameType: Identifiable {
 
     // MARK: - Enum Cases
 
-    case winning(PlayerToken)
+    case winner(PlayerToken)
     case tie
 
     // MARK: - Public Properties
@@ -13,7 +13,7 @@ enum EndOfGameType: Identifiable {
 
     var message: String {
         switch self {
-        case let .winning(playerType):
+        case let .winner(playerType):
             return "Player \(playerType.token) won the game!"
         case .tie:
             return "It's a tie! 😹"

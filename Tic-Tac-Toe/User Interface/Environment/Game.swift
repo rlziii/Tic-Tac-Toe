@@ -1,14 +1,19 @@
 import SwiftUI
 
-class GameEnvironment: ObservableObject {
+class Game: ObservableObject {
 
     // MARK: - Public Properties
 
+    var isMultiplayer: Bool
+
     @Published var gameBoard: GameBoard = GameBoard()
     @Published var endOfGameType: EndOfGameType? = nil
-    
-    @Published var isMultiplayer = false
-    @Published var difficulty: DifficultyMode = .easyMode
+
+    // MARK: - Initialization
+
+    init(isMultiplayer: Bool = false) {
+        self.isMultiplayer = isMultiplayer
+    }
 
     // MARK: - Public Methods
 
@@ -41,7 +46,7 @@ class GameEnvironment: ObservableObject {
 
         if !isMultiplayer {
             if gameBoard.currentPlayer == .o {
-                makeAIMove(difficulty: difficulty)
+                makeAIMove()
             }
         }
     }
@@ -52,7 +57,7 @@ class GameEnvironment: ObservableObject {
         }
 
         if gameBoard.hasWinner() {
-            endOfGameType = .winning(gameBoard.currentPlayer.next)
+            endOfGameType = .winner(gameBoard.currentPlayer.next)
         }
     }
 
@@ -129,29 +134,12 @@ class GameEnvironment: ObservableObject {
         return bestMove
     }
 
-    private func makeAIMove(difficulty: DifficultyMode) {
+    private func makeAIMove() {
         guard endOfGameType == nil, !gameBoard.emptyIndexes().isEmpty else {
             return
         }
 
-        let index: Int = {
-            switch difficulty {
-            case .easyMode:
-                return chooseRandomMove()
-            case .hardMode:
-                let random = Int.random(in: 0...9)
-                if random > 7 {
-                    // Choose a random move 20% of the time.
-                    return chooseRandomMove()
-                } else {
-                    // Choose the best move 80% of the time.
-                    return chooseBestMove()
-                }
-            case .impossibleMode:
-                return chooseBestMove()
-            }
-        }()
-
+        let index = chooseRandomMove()
         updateBoardTokenFor(index: index)
     }
 
