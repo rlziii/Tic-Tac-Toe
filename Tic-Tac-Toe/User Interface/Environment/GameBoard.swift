@@ -17,10 +17,6 @@ struct GameBoard {
 
     // MARK: - Subscripts
 
-    subscript(index: Int) -> PlayerToken? {
-        boardArray[index]
-    }
-
     subscript(row row: Int, column column: Int) -> PlayerToken? {
         let index = indexFor(row: row, column: column)
         return boardArray[index]
