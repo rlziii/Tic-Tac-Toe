@@ -15,11 +15,10 @@ struct BoardView: View {
     var body: some View {
         VStack {
             if (game.isMultiplayer) {
-                Text("Current Player: \(game.gameBoard.currentPlayer.token)")
+                Text("Current Player: \(game.currentPlayerToken)")
             }
 
             BoardGridView(rows: 3, columns: 3, game: game)
-                .environmentObject(game)
                 .padding()
         }
         .onAppear { game.isMultiplayer = isMultiplayer }

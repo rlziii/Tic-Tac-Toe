@@ -7,22 +7,47 @@ struct GameBoard {
     // MARK: - Private Properties
 
     private let boardArray: [PlayerToken?]
-    private let rowLength = 3
+    private let length = 3
+
+
+    // MARK: - Initialization
 
     init(boardArray: [PlayerToken?] = Array(repeating: nil, count: 9), currentPlayer: PlayerToken = .x) {
         self.boardArray = boardArray
         self.currentPlayer = currentPlayer
     }
 
-    // MARK: - Public Subscripts
+    // MARK: - Subscripts
 
     subscript(index: Int) -> PlayerToken? {
-        assert(validate(index), "Attempting to check board with index out of bounds...")
+        boardArray[index]
+    }
+
+    subscript(row row: Int, column column: Int) -> PlayerToken? {
+        let index = indexFor(row: row, column: column)
         return boardArray[index]
     }
 
     // MARK: - Public Methods
-    
+
+    func indexFor(row: Int, column: Int) -> Int {
+        (row * length) + column
+    }
+
+    func makeMove(at index: Int) -> GameBoard {
+        var tempBoardArray = boardArray
+        tempBoardArray[index] = currentPlayer
+        return GameBoard(boardArray: tempBoardArray, currentPlayer: currentPlayer.next)
+    }
+
+    func emptyIndexes() -> [Int] {
+        boardArray.indices.filter { boardArray[$0] == nil }
+    }
+
+    func isTie() -> Bool {
+        !hasWinner() && emptyIndexes().isEmpty
+    }
+
     func hasWinner() -> Bool {
         boardPositionsMatch(0, 1, 2) || // Top row.
         boardPositionsMatch(3, 4, 5) || // Middle row.
@@ -34,6 +59,8 @@ struct GameBoard {
         boardPositionsMatch(2, 4, 6)    // Backward diagonal (/).
     }
 
+    // MARK: - Private Methods
+
     private func boardPositionsMatch(_ positions: Int...) -> Bool {
         let playerTokenSet = Set(positions.map { boardArray[$0] })
 
@@ -42,39 +69,5 @@ struct GameBoard {
         }
 
         return playerToken != nil
-    }
-
-    func isTie() -> Bool {
-        !hasWinner() && emptyIndexes().isEmpty
-    }
-
-    func emptyIndexes() -> [Int] {
-        boardArray.indices.filter { boardArray[$0] == nil }
-    }
-
-    func indexFor(row: Int, column: Int) -> Int {
-        let index = (row * rowLength) + column
-
-        assert(validate(row: row, column: column), "Attempting to check board with index out of bounds...")
-
-        return index
-    }
-
-    func makeMove(at index: Int) -> GameBoard {
-        assert(validate(index), "Attempting to check board with index out of bounds...")
-
-        var tempBoardArray = boardArray
-        tempBoardArray[index] = currentPlayer
-        return GameBoard(boardArray: tempBoardArray, currentPlayer: currentPlayer.next)
-    }
-
-    // MARK: - Private Methods
-    
-    private func validate(_ index: Int) -> Bool {
-        index >= 0 && index < boardArray.count
-    }
-
-    private func validate(row: Int, column: Int) -> Bool {
-        row >= 0 && row <= (rowLength - 1) && column >= 0 && column <= (rowLength - 1)
     }
 }
