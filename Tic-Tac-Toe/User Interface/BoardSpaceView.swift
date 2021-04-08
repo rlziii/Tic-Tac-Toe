@@ -10,22 +10,22 @@ struct BoardSpaceView: View {
     // MARK: - Private Properties
 
     private let size: CGFloat = 100
+    private let backgroundColor: UIColor = .systemBackground
 
     // MARK: - Body
 
     var body: some View {
-        ZStack {
-            // Don't even need Rectangle.foregroundColor(...) here...
-            Color(.systemBackground)
-
-            switch selection {
-            case .x, .o:
-                Text(selection?.token ?? "")
-                    .font(.largeTitle)
-            case .none:
-                Button(action: action, label: {
-                    Color(.systemBackground)
-                })
+        Group {
+            if let selection = selection {
+                // Don't need to use Rectangle().foregroundColor(.systemBackground) here.
+                // Can use .overlay(...) instead of ZStack.
+                Color(backgroundColor)
+                    .overlay(
+                        Text(selection.token).font(.largeTitle)
+                    )
+            } else {
+                // Can't use EmptyView() or Text("") here because the button won't have any size then.
+                Button(action: action, label: { Color(backgroundColor) })
             }
         }.frame(width: size, height: size)
     }

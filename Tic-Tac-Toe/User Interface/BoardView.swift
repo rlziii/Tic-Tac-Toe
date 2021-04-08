@@ -2,9 +2,12 @@ import SwiftUI
 
 struct BoardView: View {
 
+    // MARK: - Public Properties
+
+    let isMultiplayer: Bool
+
     // MARK: - Private Properties
 
-    private var isMultiplayer: Bool
     @StateObject private var game = Game()
 
     // MARK: - Body
@@ -23,9 +26,7 @@ struct BoardView: View {
         .alert(item: $game.endOfGameType, content: endOfGameAlert)
     }
 
-    init(isMultiplayer: Bool) {
-        self.isMultiplayer = isMultiplayer
-    }
+    // MARK: - Private Methods
 
     private func endOfGameAlert(with type: EndOfGameType) -> Alert {
         Alert(title: Text("Game over!"),
