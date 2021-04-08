@@ -49,19 +49,23 @@ struct GameBoard {
     }
 
     func hasWinner() -> Bool {
-        boardPositionsMatch(0, 1, 2) || // Top row.
-        boardPositionsMatch(3, 4, 5) || // Middle row.
-        boardPositionsMatch(6, 7, 8) || // Bottom row.
-        boardPositionsMatch(0, 3, 6) || // Left column.
-        boardPositionsMatch(1, 4, 7) || // Center column.
-        boardPositionsMatch(2, 5, 8) || // Right column.
-        boardPositionsMatch(0, 4, 8) || // Forward diagonal (\).
-        boardPositionsMatch(2, 4, 6)    // Backward diagonal (/).
+        let potentialMatches = [
+            [0, 1, 2], // Top row.
+            [3, 4, 5], // Middle row.
+            [6, 7, 8], // Bottom row.
+            [0, 3, 6], // Left column.
+            [1, 4, 7], // Center column.
+            [2, 5, 8], // Right column.
+            [0, 4, 8], // Forward diagonal (\).
+            [2, 4, 6]  // Backward diagonal (/).
+        ]
+
+        return potentialMatches.contains(where: { boardPositionsMatch($0) })
     }
 
     // MARK: - Private Methods
 
-    private func boardPositionsMatch(_ positions: Int...) -> Bool {
+    private func boardPositionsMatch(_ positions: [Int]) -> Bool {
         let playerTokenSet = Set(positions.map { boardArray[$0] })
 
         guard playerTokenSet.count == 1, let playerToken = playerTokenSet.first else {
