@@ -27,6 +27,7 @@ struct BoardSpaceView: View {
             } else {
                 // Can't use EmptyView() or Text("") here because the button won't have any size then.
                 Button(action: action, label: { Color(backgroundColor) })
+                    .buttonStyle(NoHighlightButtonStyle())
             }
         }.aspectRatio(1.0, contentMode: .fit)
     }

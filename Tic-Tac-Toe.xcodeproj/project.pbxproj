@@ -17,6 +17,7 @@
 		802FB0FA2553AC8800DE410C /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802FB0F92553AC8800DE410C /* BoardView.swift */; };
 		802FB0FC2553AC8800DE410C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 802FB0FB2553AC8800DE410C /* Assets.xcassets */; };
 		807621DF25579F860029287B /* ModeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807621DE25579F860029287B /* ModeSelectView.swift */; };
+		80795CB1261EBA5500281F08 /* NoHighlightButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80795CB0261EBA5500281F08 /* NoHighlightButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		802FB0FB2553AC8800DE410C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		802FB1002553AC8800DE410C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		807621DE25579F860029287B /* ModeSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSelectView.swift; sourceTree = "<group>"; };
+		80795CB0261EBA5500281F08 /* NoHighlightButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoHighlightButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +109,17 @@
 				801B592B255614620009F577 /* BoardSpaceView.swift */,
 				802FB0F92553AC8800DE410C /* BoardView.swift */,
 				807621DE25579F860029287B /* ModeSelectView.swift */,
+				80795CAF261EBA4500281F08 /* Styles */,
 			);
 			path = "User Interface";
+			sourceTree = "<group>";
+		};
+		80795CAF261EBA4500281F08 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				80795CB0261EBA5500281F08 /* NoHighlightButtonStyle.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,6 +201,7 @@
 				802FB0FA2553AC8800DE410C /* BoardView.swift in Sources */,
 				802FB0F82553AC8800DE410C /* Application.swift in Sources */,
 				801B5929255614460009F577 /* BoardGridView.swift in Sources */,
+				80795CB1261EBA5500281F08 /* NoHighlightButtonStyle.swift in Sources */,
 				801B59252556141A0009F577 /* Game.swift in Sources */,
 				801B593125564A090009F577 /* GameBoard.swift in Sources */,
 			);
