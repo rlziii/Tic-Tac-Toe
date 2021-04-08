@@ -59,8 +59,8 @@
 		801B5923255613F70009F577 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
-				801B593025564A090009F577 /* GameBoard.swift */,
 				801B59242556141A0009F577 /* Game.swift */,
+				801B593025564A090009F577 /* GameBoard.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -85,6 +85,8 @@
 			isa = PBXGroup;
 			children = (
 				802FB1072553ACBD00DE410C /* App Files */,
+				801B591B255613BC0009F577 /* Enums */,
+				801B5923255613F70009F577 /* Environment */,
 				802FB1092553ACFF00DE410C /* User Interface */,
 			);
 			path = "Tic-Tac-Toe";
@@ -103,13 +105,8 @@
 		802FB1092553ACFF00DE410C /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				801B591B255613BC0009F577 /* Enums */,
-				801B5923255613F70009F577 /* Environment */,
-				801B5928255614460009F577 /* BoardGridView.swift */,
-				801B592B255614620009F577 /* BoardSpaceView.swift */,
-				802FB0F92553AC8800DE410C /* BoardView.swift */,
-				807621DE25579F860029287B /* ModeSelectView.swift */,
 				80795CAF261EBA4500281F08 /* Styles */,
+				80795CB4261EBC6200281F08 /* Views */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -120,6 +117,17 @@
 				80795CB0261EBA5500281F08 /* NoHighlightButtonStyle.swift */,
 			);
 			path = Styles;
+			sourceTree = "<group>";
+		};
+		80795CB4261EBC6200281F08 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				801B5928255614460009F577 /* BoardGridView.swift */,
+				801B592B255614620009F577 /* BoardSpaceView.swift */,
+				802FB0F92553AC8800DE410C /* BoardView.swift */,
+				807621DE25579F860029287B /* ModeSelectView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
