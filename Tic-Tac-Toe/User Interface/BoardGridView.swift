@@ -4,19 +4,12 @@ struct BoardGridView: View {
 
     // MARK: - Public Properties
 
-    let rows: Int
-    let columns: Int
     @ObservedObject var game: Game
 
     // MARK: - Private Properties
 
-    private var rowsRange: ClosedRange<Int> {
-        0...(rows - 1)
-    }
-
-    private var columnsRange: ClosedRange<Int> {
-        0...(columns - 1)
-    }
+    private let columnsRange = 0...2
+    private let rowsRange = 0...2
 
     // MARK: - Body
 
@@ -40,6 +33,6 @@ struct BoardGridView: View {
 
 struct BoardGridView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardGridView(rows: 3, columns: 3, game: Game())
+        BoardGridView(game: Game())
     }
 }

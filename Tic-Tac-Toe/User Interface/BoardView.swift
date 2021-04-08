@@ -18,7 +18,7 @@ struct BoardView: View {
                 Text("Current Player: \(game.currentPlayerToken)")
             }
 
-            BoardGridView(rows: 3, columns: 3, game: game)
+            BoardGridView(game: game)
                 .padding()
         }
         .onAppear { game.isMultiplayer = isMultiplayer }

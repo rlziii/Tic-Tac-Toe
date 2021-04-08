@@ -7,8 +7,6 @@ struct GameBoard {
     // MARK: - Private Properties
 
     private let boardArray: [PlayerToken?]
-    private let length = 3
-
 
     // MARK: - Initialization
 
@@ -31,7 +29,7 @@ struct GameBoard {
     // MARK: - Public Methods
 
     func indexFor(row: Int, column: Int) -> Int {
-        (row * length) + column
+        (row * 3) + column
     }
 
     func makeMove(at index: Int) -> GameBoard {
