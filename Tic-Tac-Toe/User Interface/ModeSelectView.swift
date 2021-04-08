@@ -35,7 +35,6 @@ struct ModeSelectView: View {
                 }
             }
             .navigationBarTitle("Mode Select")
-            .navigationBarHidden(true)
         }
     }
 }
