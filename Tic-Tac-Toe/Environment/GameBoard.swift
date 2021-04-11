@@ -24,22 +24,21 @@ struct GameBoard {
 
     // MARK: - Public Methods
 
-    func indexFor(row: Int, column: Int) -> Int {
-        (row * 3) + column
-    }
-
-    func makeMove(at index: Int) -> GameBoard {
+    func makeMove(row: Int, column: Int) -> GameBoard {
         var tempBoardArray = boardArray
+        let index = indexFor(row: row, column: column)
         tempBoardArray[index] = currentPlayer
         return GameBoard(boardArray: tempBoardArray, currentPlayer: currentPlayer.next)
     }
 
-    func emptyIndexes() -> [Int] {
-        boardArray.indices.filter { boardArray[$0] == nil }
+    func emptySpaces() -> [(Int, Int)] {
+        boardArray.indices
+            .filter { boardArray[$0] == nil }
+            .map { rowAndColumnFor(index: $0) }
     }
 
     func isTie() -> Bool {
-        !hasWinner() && emptyIndexes().isEmpty
+        !hasWinner() && emptySpaces().isEmpty
     }
 
     func hasWinner() -> Bool {
@@ -58,6 +57,14 @@ struct GameBoard {
     }
 
     // MARK: - Private Methods
+
+    private func indexFor(row: Int, column: Int) -> Int {
+        (row * 3) + column
+    }
+
+    private func rowAndColumnFor(index: Int) -> (Int, Int) {
+        index.quotientAndRemainder(dividingBy: 3)
+    }
 
     private func boardPositionsMatch(_ positions: [Int]) -> Bool {
         let playerTokenSet = Set(positions.map { boardArray[$0] })

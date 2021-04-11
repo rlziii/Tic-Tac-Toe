@@ -24,17 +24,11 @@ class Game: ObservableObject {
     }
 
     func updateBoardTokenFor(row: Int, column: Int) {
-        let index = gameBoard.indexFor(row: row, column: column)
-        updateBoardTokenFor(index: index)
+        gameBoard = gameBoard.makeMove(row: row, column: column)
+        endOfTurn()
     }
 
     // MARK: - Private Methods
-
-    private func updateBoardTokenFor(index: Int) {
-        gameBoard = gameBoard.makeMove(at: index)
-
-        endOfTurn()
-    }
 
     private func endOfTurn() {
         checkForWinner()
@@ -66,10 +60,10 @@ class Game: ObservableObject {
     }
 
     private func makeAIMove() {
-        guard endOfGameType == nil, let randomIndex = gameBoard.emptyIndexes().randomElement() else {
+        guard endOfGameType == nil, let (row, column) = gameBoard.emptySpaces().randomElement() else {
             return
         }
 
-        updateBoardTokenFor(index: randomIndex)
+        updateBoardTokenFor(row: row, column: column)
     }
 }
