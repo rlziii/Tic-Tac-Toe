@@ -1,15 +1,19 @@
+/// The structure that represents the Tic-Tac-Toe game board.
 struct GameBoard {
 
     // MARK: - Public Properties
 
+    /// The token that is next to make a move in the game.
     let currentPlayer: PlayerToken
 
     // MARK: - Private Properties
 
+    /// The underlying data structure that represents the moves made during the game.
     private let boardArray: [PlayerToken?]
 
     // MARK: - Initialization
 
+    /// - Note: The Tic-Tac-Toe board is represented as a 1D array: [0, 1, 2, 3, 4, 5, 6, 7, 8]
     init(boardArray: [PlayerToken?] = Array(repeating: nil, count: 9), currentPlayer: PlayerToken = .x) {
         self.boardArray = boardArray
         self.currentPlayer = currentPlayer
@@ -17,6 +21,7 @@ struct GameBoard {
 
     // MARK: - Subscripts
 
+    /// A convenience subscript to retrieve the `PlayerToken` at the given 2D index.
     subscript(row row: Int, column column: Int) -> PlayerToken? {
         let index = indexFor(row: row, column: column)
         return boardArray[index]
@@ -24,48 +29,19 @@ struct GameBoard {
 
     // MARK: - Public Methods
 
-    func indexFor(row: Int, column: Int) -> Int {
+    /// Converts a 2D (row, column) reference to a 1D reference index in the `boardArray`.
+    ///
+    /// - Note: The Tic-Tac-Toe `boardArray`, seen another way, looks like this:
+    ///
+    /// [0, 1, 2,
+    ///
+    ///  3, 4, 5,
+    ///
+    ///  6, 7, 8]
+    ///
+    /// Therefore, for a 0-indexed (row, column) reference of (1, 2) we would expect 5 as the 1D index.
+    /// With [row = 1] and [column = 2], we run the equation: (1 * 3) + 2 = 3 + 2 = 5.
+    private func indexFor(row: Int, column: Int) -> Int {
         (row * 3) + column
-    }
-
-    func makeMove(at index: Int) -> GameBoard {
-        var tempBoardArray = boardArray
-        tempBoardArray[index] = currentPlayer
-        return GameBoard(boardArray: tempBoardArray, currentPlayer: currentPlayer.next)
-    }
-
-    func emptyIndexes() -> [Int] {
-        boardArray.indices.filter { boardArray[$0] == nil }
-    }
-
-    func isTie() -> Bool {
-        !hasWinner() && emptyIndexes().isEmpty
-    }
-
-    func hasWinner() -> Bool {
-        let potentialMatches = [
-            [0, 1, 2], // Top row.
-            [3, 4, 5], // Middle row.
-            [6, 7, 8], // Bottom row.
-            [0, 3, 6], // Left column.
-            [1, 4, 7], // Center column.
-            [2, 5, 8], // Right column.
-            [0, 4, 8], // Forward diagonal (\).
-            [2, 4, 6]  // Backward diagonal (/).
-        ]
-
-        return potentialMatches.contains(where: { boardPositionsMatch($0) })
-    }
-
-    // MARK: - Private Methods
-
-    private func boardPositionsMatch(_ positions: [Int]) -> Bool {
-        let playerTokenSet = Set(positions.map { boardArray[$0] })
-
-        guard playerTokenSet.count == 1, let playerToken = playerTokenSet.first else {
-            return false
-        }
-
-        return playerToken != nil
     }
 }
