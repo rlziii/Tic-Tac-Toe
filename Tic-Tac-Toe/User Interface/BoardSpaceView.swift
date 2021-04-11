@@ -27,7 +27,6 @@ struct BoardSpaceView: View {
             } else {
                 // Can't use EmptyView() or Text("") here because the button won't have any size then.
                 Button(action: action, label: { Color(backgroundColor) })
-                    .buttonStyle(NoHighlightButtonStyle())
             }
         }.aspectRatio(1.0, contentMode: .fit)
     }
@@ -41,17 +40,17 @@ struct BoardSpaceView_Previews: PreviewProvider {
             // Shows an empty space.
             // Red border is for visual debugging only.
             BoardSpaceView(selection: .none)
-                .border(Color.red, width: 1)
+                .border(Color.red)
 
             // Shows an ❌ space.
             // Red border is for visual debugging only.
             BoardSpaceView(selection: .x)
-                .border(Color.red, width: 1)
+                .border(Color.red)
 
             // Shows an ⭕️ space.
             // Red border is for visual debugging only.
             BoardSpaceView(selection: .o)
-                .border(Color.red, width: 1)
+                .border(Color.red)
         }
     }
 }

@@ -21,16 +21,21 @@ struct BoardView: View {
             BoardGridView(game: game)
                 .padding()
         }
-        .onAppear { game.isMultiplayer = isMultiplayer }
+        .onAppear(perform: setup)
         .alert(item: $game.endOfGameType, content: endOfGameAlert)
     }
 
     // MARK: - Private Methods
 
+    private func setup() {
+        game.isMultiplayer = isMultiplayer
+    }
+
     private func endOfGameAlert(with type: EndOfGameType) -> Alert {
-        Alert(title: Text("Game over!"),
-              message: Text(type.message),
-              dismissButton: .default(Text("Reset Game"), action: game.resetGame)
+        Alert(
+            title: Text("Game over!"),
+            message: Text(type.message),
+            dismissButton: .default(Text("Reset Game"), action: game.resetGame)
         )
     }
 }
