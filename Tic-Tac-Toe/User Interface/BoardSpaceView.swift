@@ -5,7 +5,7 @@ struct BoardSpaceView: View {
     // MARK: - Public Properties
 
     let selection: PlayerToken?
-    var action: () -> Void = {}
+    let action: () -> Void
 
     // MARK: - Private Properties
 
@@ -39,17 +39,17 @@ struct BoardSpaceView_Previews: PreviewProvider {
         HStack {
             // Shows an empty space.
             // Red border is for visual debugging only.
-            BoardSpaceView(selection: .none)
+            BoardSpaceView(selection: .none, action: {})
                 .border(Color.red)
 
             // Shows an ❌ space.
             // Red border is for visual debugging only.
-            BoardSpaceView(selection: .x)
+            BoardSpaceView(selection: .x, action: {})
                 .border(Color.red)
 
             // Shows an ⭕️ space.
             // Red border is for visual debugging only.
-            BoardSpaceView(selection: .o)
+            BoardSpaceView(selection: .o, action: {})
                 .border(Color.red)
         }
     }

@@ -34,26 +34,22 @@ struct GameBoard {
     func emptySpaces() -> [(Int, Int)] {
         boardArray.indices
             .filter { boardArray[$0] == nil }
-            .map { rowAndColumnFor(index: $0) }
+            .map { $0.quotientAndRemainder(dividingBy: 3) }
     }
 
     func isTie() -> Bool {
-        !hasWinner() && emptySpaces().isEmpty
+        !hasWinner() && !hasEmptySpaces()
     }
 
     func hasWinner() -> Bool {
-        let potentialMatches = [
-            [0, 1, 2], // Top row.
-            [3, 4, 5], // Middle row.
-            [6, 7, 8], // Bottom row.
-            [0, 3, 6], // Left column.
-            [1, 4, 7], // Center column.
-            [2, 5, 8], // Right column.
-            [0, 4, 8], // Forward diagonal (\).
-            [2, 4, 6]  // Backward diagonal (/).
-        ]
-
-        return potentialMatches.contains(where: { boardPositionsMatch($0) })
+        checkLineForWinner(0, 1, 2) ||
+        checkLineForWinner(3, 4, 5) ||
+        checkLineForWinner(6, 7, 8) ||
+        checkLineForWinner(0, 3, 6) ||
+        checkLineForWinner(1, 4, 7) ||
+        checkLineForWinner(2, 5, 8) ||
+        checkLineForWinner(0, 4, 8) ||
+        checkLineForWinner(2, 4, 6)
     }
 
     // MARK: - Private Methods
@@ -62,17 +58,13 @@ struct GameBoard {
         (row * 3) + column
     }
 
-    private func rowAndColumnFor(index: Int) -> (Int, Int) {
-        index.quotientAndRemainder(dividingBy: 3)
+    private func checkLineForWinner(_ first: Int, _ second: Int, _ third: Int) -> Bool {
+        (boardArray[first] != nil) &&
+        (boardArray[first] == boardArray[second]) &&
+        (boardArray[second] == boardArray[third])
     }
 
-    private func boardPositionsMatch(_ positions: [Int]) -> Bool {
-        let playerTokenSet = Set(positions.map { boardArray[$0] })
-
-        guard playerTokenSet.count == 1, let playerToken = playerTokenSet.first else {
-            return false
-        }
-
-        return playerToken != nil
+    private func hasEmptySpaces() -> Bool {
+        boardArray.contains(nil)
     }
 }

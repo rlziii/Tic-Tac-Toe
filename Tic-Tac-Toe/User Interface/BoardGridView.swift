@@ -6,18 +6,13 @@ struct BoardGridView: View {
 
     @ObservedObject var game: Game
 
-    // MARK: - Private Properties
-
-    private let columnsRange = 0...2
-    private let rowsRange = 0...2
-
     // MARK: - Body
 
     var body: some View {
         HStack {
-            ForEach(columnsRange, id: \.self) { column in
+            ForEach(0..<3) { column in
                 VStack {
-                    ForEach(rowsRange, id: \.self) { row in
+                    ForEach(0..<3) { row in
                         BoardSpaceView(
                             selection: game.boardTokenFor(row: row, column: column),
                             action: { game.updateBoardTokenFor(row: row, column: column) }
@@ -25,7 +20,9 @@ struct BoardGridView: View {
                     }
                 }
             }
-        }.background(Color.primary)
+        }
+        .background(Color.primary)
+        .padding(1)
     }
 }
 
