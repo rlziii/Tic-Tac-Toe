@@ -29,6 +29,10 @@ struct GameBoard {
 
     // MARK: - Public Methods
 
+    // ...
+
+    // MARK: - Private Methods
+
     /// Converts a 2D (row, column) reference to a 1D reference index in the `boardArray`.
     ///
     /// - Note: The Tic-Tac-Toe `boardArray`, seen another way, looks like this:
