@@ -22,7 +22,7 @@ struct BoardGridView: View {
             }
         }
         .background(Color.primary)
-        .padding(1)
+        .padding()
     }
 }
 

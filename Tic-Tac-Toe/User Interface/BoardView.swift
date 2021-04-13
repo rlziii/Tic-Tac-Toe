@@ -19,7 +19,6 @@ struct BoardView: View {
             }
 
             BoardGridView(game: game)
-                .padding()
         }
         .onAppear(perform: setup)
         .alert(item: $game.endOfGameType, content: endOfGameAlert)

@@ -7,10 +7,6 @@ struct BoardSpaceView: View {
     let selection: PlayerToken?
     let action: () -> Void
 
-    // MARK: - Private Properties
-
-    private let backgroundColor: UIColor = .systemBackground
-
     // MARK: - Body
 
     var body: some View {
@@ -18,7 +14,7 @@ struct BoardSpaceView: View {
             if let selection = selection {
                 // Don't need to use Rectangle().foregroundColor(.systemBackground) here.
                 // Can use .overlay(...) instead of ZStack.
-                Color(backgroundColor)
+                Color(.systemBackground)
                     .overlay(
                         Text(selection.token)
                             .font(.largeTitle)
@@ -26,7 +22,7 @@ struct BoardSpaceView: View {
                     )
             } else {
                 // Can't use EmptyView() or Text("") here because the button won't have any size then.
-                Button(action: action, label: { Color(backgroundColor) })
+                Button(action: action, label: { Color(.systemBackground) })
             }
         }.aspectRatio(1.0, contentMode: .fit)
     }
