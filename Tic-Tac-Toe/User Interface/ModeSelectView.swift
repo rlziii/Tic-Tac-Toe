@@ -16,12 +16,12 @@ struct ModeSelectView: View {
                 }
 
                 NavigationLink(
-                    destination: BoardView(isMultiplayer: false),
+                    destination: BoardView(game: Game(isMultiplayer: false)),
                     label: { Label("One Player", systemImage: "person.fill") }
                 )
 
                 NavigationLink(
-                    destination: BoardView(isMultiplayer: true),
+                    destination: BoardView(game: Game(isMultiplayer: true)),
                     label: { Label("Two Player", systemImage: "person.2.fill") }
                 )
             }

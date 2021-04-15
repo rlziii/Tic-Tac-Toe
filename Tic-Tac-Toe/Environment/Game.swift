@@ -5,11 +5,18 @@ class Game: ObservableObject {
     // MARK: - Public Properties
 
     @Published private var gameBoard = GameBoard()
-    @Published var isMultiplayer = false
     @Published var endOfGameType: EndOfGameType? = nil
+
+    let isMultiplayer: Bool
 
     var currentPlayerToken: String {
         gameBoard.currentPlayer.token
+    }
+
+    // MARK: - Initialization
+
+    init(isMultiplayer: Bool) {
+        self.isMultiplayer = isMultiplayer
     }
 
     // MARK: - Public Methods

@@ -30,6 +30,6 @@ struct BoardGridView: View {
 
 struct BoardGridView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardGridView(game: Game())
+        BoardGridView(game: Game(isMultiplayer: false))
     }
 }

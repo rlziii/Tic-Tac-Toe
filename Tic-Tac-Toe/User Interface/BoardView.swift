@@ -4,11 +4,7 @@ struct BoardView: View {
 
     // MARK: - Public Properties
 
-    let isMultiplayer: Bool
-
-    // MARK: - Private Properties
-
-    @StateObject private var game = Game()
+    @StateObject var game: Game
 
     // MARK: - Body
 
@@ -20,14 +16,7 @@ struct BoardView: View {
 
             BoardGridView(game: game)
         }
-        .onAppear(perform: setup)
         .alert(item: $game.endOfGameType, content: endOfGameAlert)
-    }
-
-    // MARK: - Private Methods
-
-    private func setup() {
-        game.isMultiplayer = isMultiplayer
     }
 
     private func endOfGameAlert(with type: EndOfGameType) -> Alert {
@@ -43,6 +32,7 @@ struct BoardView: View {
 
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardView(isMultiplayer: false)
+        BoardView(game: Game(isMultiplayer: false))
+        BoardView(game: Game(isMultiplayer: true))
     }
 }
