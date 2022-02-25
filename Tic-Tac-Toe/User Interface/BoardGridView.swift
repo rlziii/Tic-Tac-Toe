@@ -4,19 +4,12 @@ struct BoardGridView: View {
 
     // MARK: - Public Properties
 
-    let rows: Int
-    let columns: Int
-    let size: CGFloat
+    @ObservedObject var game: Game
 
     // MARK: - Private Properties
 
-    private var rowsRange: ClosedRange<Int> {
-        0...(rows - 1)
-    }
-
-    private var columnsRange: ClosedRange<Int> {
-        0...(columns - 1)
-    }
+    private let columnsRange = 0...2
+    private let rowsRange = 0...2
 
     // MARK: - Body
 
@@ -25,8 +18,10 @@ struct BoardGridView: View {
             ForEach(columnsRange, id: \.self) { column in
                 VStack {
                     ForEach(rowsRange, id: \.self) { row in
-                        BoardSpaceView(size: size, row: row, column: column)
-                            .frame(width: size, height: size)
+                        BoardSpaceView(
+                            selection: game.boardTokenFor(row: row, column: column),
+                            action: { game.updateBoardTokenFor(row: row, column: column) }
+                        )
                     }
                 }
             }
@@ -38,7 +33,6 @@ struct BoardGridView: View {
 
 struct BoardGridView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardGridView(rows: 3, columns: 3, size: 100)
-            .environmentObject(GameEnvironment())
+        BoardGridView(game: Game())
     }
 }

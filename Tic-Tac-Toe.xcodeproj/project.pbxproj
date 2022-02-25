@@ -3,55 +3,34 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		801B591D255613CE0009F577 /* EndOfGameType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B591C255613CE0009F577 /* EndOfGameType.swift */; };
 		801B5921255613E60009F577 /* PlayerToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B5920255613E60009F577 /* PlayerToken.swift */; };
-		801B59252556141A0009F577 /* GameEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B59242556141A0009F577 /* GameEnvironment.swift */; };
+		801B59252556141A0009F577 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B59242556141A0009F577 /* Game.swift */; };
 		801B5929255614460009F577 /* BoardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B5928255614460009F577 /* BoardGridView.swift */; };
 		801B592C255614620009F577 /* BoardSpaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B592B255614620009F577 /* BoardSpaceView.swift */; };
 		801B593125564A090009F577 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B593025564A090009F577 /* GameBoard.swift */; };
-		801B5939255708B90009F577 /* DifficultyMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B5938255708B90009F577 /* DifficultyMode.swift */; };
-		801B593C255708E20009F577 /* MultiplayerMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801B593B255708E20009F577 /* MultiplayerMode.swift */; };
 		802FB0F82553AC8800DE410C /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802FB0F72553AC8800DE410C /* Application.swift */; };
 		802FB0FA2553AC8800DE410C /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802FB0F92553AC8800DE410C /* BoardView.swift */; };
 		802FB0FC2553AC8800DE410C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 802FB0FB2553AC8800DE410C /* Assets.xcassets */; };
-		802FB10C2553AD9600DE410C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 802FB10B2553AD9600DE410C /* GoogleService-Info.plist */; };
-		802FB1102553AE5700DE410C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 802FB10F2553AE5700DE410C /* FirebaseAuth */; };
-		802FB1122553AE5700DE410C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 802FB1112553AE5700DE410C /* FirebaseFirestore */; };
-		802FB1142553AE5700DE410C /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 802FB1132553AE5700DE410C /* FirebaseFirestoreSwift-Beta */; };
-		802FB1192553AE7200DE410C /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802FB1182553AE7200DE410C /* FirebaseManager.swift */; };
-		802FB1212553B4AD00DE410C /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802FB1202553B4AD00DE410C /* FirebaseError.swift */; };
-		8040DEF5255C61950057C63C /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8040DEF4255C61950057C63C /* ColorExtensions.swift */; };
-		80739BBA2558FE07006E6E26 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80739BB92558FE07006E6E26 /* Game.swift */; };
-		80739BBF2558FEFA006E6E26 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80739BBE2558FEFA006E6E26 /* Player.swift */; };
-		80739BC32558FF0B006E6E26 /* BoardSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80739BC22558FF0B006E6E26 /* BoardSpace.swift */; };
 		807621DF25579F860029287B /* ModeSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807621DE25579F860029287B /* ModeSelectView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		801B591C255613CE0009F577 /* EndOfGameType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndOfGameType.swift; sourceTree = "<group>"; };
 		801B5920255613E60009F577 /* PlayerToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerToken.swift; sourceTree = "<group>"; };
-		801B59242556141A0009F577 /* GameEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEnvironment.swift; sourceTree = "<group>"; };
+		801B59242556141A0009F577 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		801B5928255614460009F577 /* BoardGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardGridView.swift; sourceTree = "<group>"; };
 		801B592B255614620009F577 /* BoardSpaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSpaceView.swift; sourceTree = "<group>"; };
 		801B593025564A090009F577 /* GameBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoard.swift; sourceTree = "<group>"; };
-		801B5938255708B90009F577 /* DifficultyMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyMode.swift; sourceTree = "<group>"; };
-		801B593B255708E20009F577 /* MultiplayerMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerMode.swift; sourceTree = "<group>"; };
 		802FB0F42553AC8800DE410C /* Tic-Tac-Toe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tic-Tac-Toe.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		802FB0F72553AC8800DE410C /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		802FB0F92553AC8800DE410C /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		802FB0FB2553AC8800DE410C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		802FB1002553AC8800DE410C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		802FB10B2553AD9600DE410C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		802FB1182553AE7200DE410C /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		802FB1202553B4AD00DE410C /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
-		8040DEF4255C61950057C63C /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
-		80739BB92558FE07006E6E26 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
-		80739BBE2558FEFA006E6E26 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		80739BC22558FF0B006E6E26 /* BoardSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardSpace.swift; sourceTree = "<group>"; };
 		807621DE25579F860029287B /* ModeSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeSelectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,9 +39,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				802FB1142553AE5700DE410C /* FirebaseFirestoreSwift-Beta in Frameworks */,
-				802FB1102553AE5700DE410C /* FirebaseAuth in Frameworks */,
-				802FB1122553AE5700DE410C /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,9 +48,7 @@
 		801B591B255613BC0009F577 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				801B5938255708B90009F577 /* DifficultyMode.swift */,
 				801B591C255613CE0009F577 /* EndOfGameType.swift */,
-				801B593B255708E20009F577 /* MultiplayerMode.swift */,
 				801B5920255613E60009F577 /* PlayerToken.swift */,
 			);
 			path = Enums;
@@ -84,7 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				801B593025564A090009F577 /* GameBoard.swift */,
-				801B59242556141A0009F577 /* GameEnvironment.swift */,
+				801B59242556141A0009F577 /* Game.swift */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -109,8 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				802FB1072553ACBD00DE410C /* App Files */,
-				8040DEF3255C61750057C63C /* Extensions */,
-				802FB1152553AE5F00DE410C /* Firebase */,
 				802FB1092553ACFF00DE410C /* User Interface */,
 			);
 			path = "Tic-Tac-Toe";
@@ -121,7 +93,6 @@
 			children = (
 				802FB0F72553AC8800DE410C /* Application.swift */,
 				802FB0FB2553AC8800DE410C /* Assets.xcassets */,
-				802FB10B2553AD9600DE410C /* GoogleService-Info.plist */,
 				802FB1002553AC8800DE410C /* Info.plist */,
 			);
 			path = "App Files";
@@ -138,42 +109,6 @@
 				807621DE25579F860029287B /* ModeSelectView.swift */,
 			);
 			path = "User Interface";
-			sourceTree = "<group>";
-		};
-		802FB1152553AE5F00DE410C /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				80739BBC2558FEE4006E6E26 /* Models */,
-				802FB1202553B4AD00DE410C /* FirebaseError.swift */,
-				802FB1182553AE7200DE410C /* FirebaseManager.swift */,
-			);
-			path = Firebase;
-			sourceTree = "<group>";
-		};
-		8040DEF3255C61750057C63C /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				8040DEF4255C61950057C63C /* ColorExtensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		80739BBC2558FEE4006E6E26 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				80739BBD2558FEEA006E6E26 /* Enums */,
-				80739BB92558FE07006E6E26 /* Game.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		80739BBD2558FEEA006E6E26 /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				80739BC22558FF0B006E6E26 /* BoardSpace.swift */,
-				80739BBE2558FEFA006E6E26 /* Player.swift */,
-			);
-			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,9 +128,6 @@
 			);
 			name = "Tic-Tac-Toe";
 			packageProductDependencies = (
-				802FB10F2553AE5700DE410C /* FirebaseAuth */,
-				802FB1112553AE5700DE410C /* FirebaseFirestore */,
-				802FB1132553AE5700DE410C /* FirebaseFirestoreSwift-Beta */,
 			);
 			productName = "Tic-Tac-Toe";
 			productReference = 802FB0F42553AC8800DE410C /* Tic-Tac-Toe.app */;
@@ -225,7 +157,6 @@
 			);
 			mainGroup = 802FB0EB2553AC8800DE410C;
 			packageReferences = (
-				802FB10E2553AE5700DE410C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 802FB0F52553AC8800DE410C /* Products */;
 			projectDirPath = "";
@@ -242,7 +173,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				802FB0FC2553AC8800DE410C /* Assets.xcassets in Resources */,
-				802FB10C2553AD9600DE410C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,23 +183,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				802FB1192553AE7200DE410C /* FirebaseManager.swift in Sources */,
-				80739BBA2558FE07006E6E26 /* Game.swift in Sources */,
 				807621DF25579F860029287B /* ModeSelectView.swift in Sources */,
-				80739BBF2558FEFA006E6E26 /* Player.swift in Sources */,
-				80739BC32558FF0B006E6E26 /* BoardSpace.swift in Sources */,
-				801B593C255708E20009F577 /* MultiplayerMode.swift in Sources */,
 				801B592C255614620009F577 /* BoardSpaceView.swift in Sources */,
 				801B5921255613E60009F577 /* PlayerToken.swift in Sources */,
 				801B591D255613CE0009F577 /* EndOfGameType.swift in Sources */,
 				802FB0FA2553AC8800DE410C /* BoardView.swift in Sources */,
 				802FB0F82553AC8800DE410C /* Application.swift in Sources */,
 				801B5929255614460009F577 /* BoardGridView.swift in Sources */,
-				802FB1212553B4AD00DE410C /* FirebaseError.swift in Sources */,
-				801B59252556141A0009F577 /* GameEnvironment.swift in Sources */,
-				801B5939255708B90009F577 /* DifficultyMode.swift in Sources */,
+				801B59252556141A0009F577 /* Game.swift in Sources */,
 				801B593125564A090009F577 /* GameBoard.swift in Sources */,
-				8040DEF5255C61950057C63C /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,7 +249,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -382,7 +304,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -458,35 +380,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		802FB10E2553AE5700DE410C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		802FB10F2553AE5700DE410C /* FirebaseAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 802FB10E2553AE5700DE410C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
-		};
-		802FB1112553AE5700DE410C /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 802FB10E2553AE5700DE410C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-		802FB1132553AE5700DE410C /* FirebaseFirestoreSwift-Beta */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 802FB10E2553AE5700DE410C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = "FirebaseFirestoreSwift-Beta";
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 802FB0EC2553AC8800DE410C /* Project object */;
 }

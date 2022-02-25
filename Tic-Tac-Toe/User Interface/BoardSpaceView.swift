@@ -4,75 +4,53 @@ struct BoardSpaceView: View {
 
     // MARK: - Public Properties
 
-    let size: CGFloat
-    let row: Int
-    let column: Int
+    let selection: PlayerToken?
+    var action: () -> Void = {}
 
     // MARK: - Private Properties
 
-    @EnvironmentObject private var gameEnvironment: GameEnvironment
-
-    private var selection: PlayerToken? {
-        gameEnvironment.boardTokenFor(row: row, column: column)
-    }
+    private let backgroundColor: UIColor = .systemBackground
 
     // MARK: - Body
 
     var body: some View {
-        ZStack {
-            Rectangle()
-                .size(width: size, height: size)
-                .frame(width: size, height: size)
-                .foregroundColor(.background)
-
-            switch selection {
-            case .x, .o:
-                Text(selection?.token ?? "")
-                    .font(.largeTitle)
-                    .frame(width: size, height: size)
-            case .none:
-                Button(action: {
-                    gameEnvironment.updateBoardTokenFor(row: row, column: column)
-                }, label: {
-                    Text("")
-                        .frame(width: size, height: size)
-                })
+        Group {
+            if let selection = selection {
+                // Don't need to use Rectangle().foregroundColor(.systemBackground) here.
+                // Can use .overlay(...) instead of ZStack.
+                Color(backgroundColor)
+                    .overlay(
+                        Text(selection.token)
+                            .font(.largeTitle)
+                            .scaleEffect(2.0)
+                    )
+            } else {
+                // Can't use EmptyView() or Text("") here because the button won't have any size then.
+                Button(action: action, label: { Color(backgroundColor) })
             }
-        }
+        }.aspectRatio(1.0, contentMode: .fit)
     }
 }
 
 // MARK: - Previews
 
 struct BoardSpaceView_Previews: PreviewProvider {
-    static let emptyGameEnvironment = GameEnvironment()
-
-    static let xGameEnvironment: GameEnvironment = {
-        let gameEnvironment = GameEnvironment()
-        gameEnvironment.updateBoardTokenFor(row: 0, column: 0)
-        return gameEnvironment
-    }()
-
-    static let oGameEnvironment: GameEnvironment = {
-        let gameEnvironment = GameEnvironment()
-        gameEnvironment.updateBoardTokenFor(row: 0, column: 1)
-        gameEnvironment.updateBoardTokenFor(row: 0, column: 0)
-        return gameEnvironment
-    }()
-
     static var previews: some View {
         HStack {
             // Shows an empty space.
-            BoardSpaceView(size: 100, row: 0, column: 0)
-                .environmentObject(emptyGameEnvironment)
+            // Red border is for visual debugging only.
+            BoardSpaceView(selection: .none)
+                .border(Color.red, width: 1)
 
             // Shows an ❌ space.
-            BoardSpaceView(size: 100, row: 0, column: 0)
-                .environmentObject(xGameEnvironment)
+            // Red border is for visual debugging only.
+            BoardSpaceView(selection: .x)
+                .border(Color.red, width: 1)
 
             // Shows an ⭕️ space.
-            BoardSpaceView(size: 100, row: 0, column: 0)
-                .environmentObject(oGameEnvironment)
+            // Red border is for visual debugging only.
+            BoardSpaceView(selection: .o)
+                .border(Color.red, width: 1)
         }
     }
 }
