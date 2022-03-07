@@ -1,12 +1,26 @@
 import SwiftUI
 
+enum GameMode {
+    case onePlayer(GameDifficulty)
+    case twoPlayer
+}
+
+enum GameDifficulty {
+    case easy
+    case hard
+}
+
 class Game: ObservableObject {
 
     // MARK: - Public Properties
 
     @Published private var gameBoard = GameBoard()
-    @Published var isMultiplayer = false
+    @Published var mode: GameMode
     @Published var endOfGameType: EndOfGameType? = nil
+
+    init(mode: GameMode) {
+        self.mode = mode
+    }
 
     var currentPlayerToken: String {
         gameBoard.currentPlayer.token
@@ -40,8 +54,13 @@ class Game: ObservableObject {
         checkForWinner()
         checkForTie()
 
-        if !isMultiplayer, gameBoard.currentPlayer == .o {
-            makeAIMove()
+        switch mode {
+        case .onePlayer:
+            if gameBoard.currentPlayer == .o {
+                makeAIMove()
+            }
+        case .twoPlayer:
+            break // Do nothing.
         }
     }
 
@@ -66,10 +85,88 @@ class Game: ObservableObject {
     }
 
     private func makeAIMove() {
-        guard endOfGameType == nil, let randomIndex = gameBoard.emptyIndexes().randomElement() else {
+        guard endOfGameType == nil, !gameBoard.emptyIndexes().isEmpty else {
             return
         }
 
-        updateBoardTokenFor(index: randomIndex)
+        let index: Int
+
+        switch mode {
+        case .onePlayer(let gameDifficulty):
+            switch gameDifficulty {
+            case .easy:
+                index = chooseRandomMove()
+            case .hard:
+                index = chooseBestMove()
+            }
+        case .twoPlayer:
+            preconditionFailure("Should not attempt AI move in two-player game.")
+        }
+
+        updateBoardTokenFor(index: index)
+    }
+
+    private func chooseRandomMove() -> Int {
+        assert(!gameBoard.emptyIndexes().isEmpty)
+
+        return gameBoard.emptyIndexes().randomElement()!
+    }
+
+    private func chooseBestMove() -> Int {
+        // Local function.
+        func minimax(gameBoard: GameBoard, maximizing: Bool, originalPlayer: PlayerToken, alpha: Int, beta: Int) -> Int {
+            if gameBoard.hasWinner() && originalPlayer == gameBoard.currentPlayer.next {
+                return 1
+            } else if gameBoard.hasWinner() && originalPlayer != gameBoard.currentPlayer.next {
+                return -1
+            } else if gameBoard.isTie() {
+                return 0
+            }
+
+            if maximizing {
+                var bestEvaluation = Int.min
+
+                for index in gameBoard.emptyIndexes() {
+                    let alpha = max(bestEvaluation, alpha)
+
+                    if alpha >= beta {
+                        break
+                    }
+
+                    let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: false, originalPlayer: originalPlayer, alpha: alpha, beta: beta)
+                    bestEvaluation = max(result, bestEvaluation)
+                }
+
+                return bestEvaluation
+            } else {
+                var worstEvaluation = Int.max
+
+                for index in gameBoard.emptyIndexes() {
+                    let beta = min(worstEvaluation, beta)
+
+                    if alpha >= beta {
+                        break
+                    }
+
+                    let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: true, originalPlayer: originalPlayer, alpha: alpha, beta: beta)
+                    worstEvaluation = min(result, worstEvaluation)
+                }
+
+                return worstEvaluation
+            }
+        }
+
+        var bestEvaluation = Int.min
+        var bestMoveIndex = -1
+
+        for index in gameBoard.emptyIndexes() {
+            let result = minimax(gameBoard: gameBoard.makeMove(at: index), maximizing: false, originalPlayer: gameBoard.currentPlayer, alpha: Int.min, beta: Int.max)
+            if result > bestEvaluation {
+                bestEvaluation = result
+                bestMoveIndex = index
+            }
+        }
+
+        return bestMoveIndex
     }
 }

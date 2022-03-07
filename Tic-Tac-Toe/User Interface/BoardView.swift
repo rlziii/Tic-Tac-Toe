@@ -2,26 +2,30 @@ import SwiftUI
 
 struct BoardView: View {
 
-    // MARK: - Public Properties
-
-    let isMultiplayer: Bool
-
     // MARK: - Private Properties
 
-    @StateObject private var game = Game()
+    @StateObject private var game: Game
+
+    // MARK: - Initialization
+
+    init(mode: GameMode) {
+        _game = StateObject(wrappedValue: Game(mode: mode))
+    }
 
     // MARK: - Body
 
     var body: some View {
         VStack {
-            if (game.isMultiplayer) {
+            switch game.mode {
+            case .onePlayer:
                 Text("Current Player: \(game.currentPlayerToken)")
+            case .twoPlayer:
+                EmptyView()
             }
 
             BoardGridView(game: game)
                 .padding()
         }
-        .onAppear { game.isMultiplayer = isMultiplayer }
         .alert(item: $game.endOfGameType, content: endOfGameAlert)
     }
 
@@ -39,6 +43,6 @@ struct BoardView: View {
 
 struct BoardView_Previews: PreviewProvider {
     static var previews: some View {
-        BoardView(isMultiplayer: false)
+        BoardView(mode: .onePlayer(.easy))
     }
 }
